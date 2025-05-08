@@ -60,8 +60,52 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
   // Handle connection between nodes
   const onConnect = useCallback((connection: Connection) => {
     saveToHistory();
-    setEdges((eds) => addEdge({ ...connection, id: `e${connection.source}-${connection.target}` }, eds));
-  }, [saveToHistory]);
+    
+    // Create a unique ID for the new edge
+    const edgeId = `e${connection.source}-${connection.target}`;
+    
+    // Get source and target node types to determine edge style
+    let sourceType = '';
+    let targetType = '';
+    
+    // Find source and target nodes to get their types
+    nodes.forEach(node => {
+      if (node.id === connection.source) {
+        sourceType = node.type;
+      }
+      if (node.id === connection.target) {
+        targetType = node.type;
+      }
+    });
+    
+    // Determine edge type based on node types
+    let edgeType = 'default';
+    
+    if (sourceType === 'condition') {
+      edgeType = 'dashed';
+    } else if (sourceType === 'filter') {
+      edgeType = 'warning';
+    } else if (sourceType === 'process' && targetType === 'output') {
+      edgeType = 'success';
+    }
+    
+    // Add the node types and edge type to the connection data
+    const edgeData = {
+      sourceType,
+      targetType,
+      label: '',  // Can be set later if needed
+    };
+    
+    // Create the enhanced connection object
+    const enhancedConnection = {
+      ...connection,
+      id: edgeId,
+      type: edgeType,
+      data: edgeData
+    };
+    
+    setEdges((eds) => addEdge(enhancedConnection, eds));
+  }, [nodes, saveToHistory]);
 
   // Handle node selection
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {

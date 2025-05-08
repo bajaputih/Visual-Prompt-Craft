@@ -156,12 +156,49 @@
   background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  transition: all 0.2s ease;
 }
 
 .dark .designer-grid {
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Drag and drop visual enhancements */
+.designer-grid.drag-over {
+  @apply bg-primary/5 ring-2 ring-primary/20 ring-inset;
+  animation: gridPulse 1.5s infinite;
+}
+
+@keyframes gridPulse {
+  0% {
+    @apply bg-primary/5;
+  }
+  50% {
+    @apply bg-primary/10;
+  }
+  100% {
+    @apply bg-primary/5;
+  }
+}
+
+/* Dragging element styles */
+.node-palette-item {
+  @apply border border-transparent transition-all duration-200;
+}
+
+.node-palette-item.dragging {
+  @apply opacity-50 shadow-lg border-primary;
+}
+
+.node-palette-item:hover {
+  @apply bg-primary/5 cursor-grab border-primary/20;
+  transform: translateY(-2px);
+}
+
+.node-palette-item:active {
+  @apply cursor-grabbing;
 }
 
 /* React Flow Node Styling */
