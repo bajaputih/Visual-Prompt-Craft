@@ -31,7 +31,7 @@ export default function PromptToolbar({
   const [, setLocation] = useLocation();
   const navigate = (path: string) => setLocation(path);
   const { toast } = useToast();
-  const [promptName, setPromptName] = useState(prompt?.name || "Untitled Prompt");
+  const [promptName, setPromptName] = useState(prompt?.name || "بدون عنوان");
   
   // Save prompt mutation
   const savePromptMutation = useMutation({
@@ -47,14 +47,14 @@ export default function PromptToolbar({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/prompts'] });
       toast({
-        title: "Success",
-        description: "Prompt saved successfully",
+        title: "تم بنجاح",
+        description: "تم حفظ الـ Prompt بنجاح",
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
-        description: `Failed to save prompt: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        title: "خطأ",
+        description: `فشل في حفظ الـ Prompt: ${error instanceof Error ? error.message : 'خطأ غير معروف'}`,
         variant: "destructive",
       });
     }
@@ -98,7 +98,7 @@ export default function PromptToolbar({
       <div className="flex items-center gap-4">
         <Input
           type="text"
-          placeholder="Untitled Prompt"
+          placeholder="بدون عنوان"
           className="border-none text-lg font-medium focus:outline-none focus:ring-0 bg-transparent w-auto"
           value={promptName}
           onChange={handleNameChange}
