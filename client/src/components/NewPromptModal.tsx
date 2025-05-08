@@ -121,8 +121,8 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
   const processImportedFile = async () => {
     if (!importFile) {
       toast({
-        title: "خطأ",
-        description: "لم يتم اختيار ملف للاستيراد",
+        title: "Error",
+        description: "No file selected for import",
         variant: "destructive",
       });
       return;
