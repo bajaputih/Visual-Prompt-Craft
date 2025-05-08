@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2, FileInput, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
+import { customApiRequest } from '@/lib/customApiRequest';
 import { FlowElements } from '@shared/schema';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -44,12 +45,12 @@ export default function ImportConversation({ isOpen, onClose, onImport }: Import
     try {
       setIsImporting(true);
       
-      const response = await apiRequest('/api/import-conversation', {
+      const response = await customApiRequest('/api/import-conversation', {
         method: 'POST',
-        body: JSON.stringify({
+        body: {
           conversation,
           source
-        }),
+        },
       });
       
       if (!response.elements) {

@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { customApiRequest } from '@/lib/customApiRequest';
 import { FlowElements } from '@shared/schema';
-import { askSecrets } from './utils/askSecrets';
+import { askSecrets } from '@/components/utils/askSecrets';
 
 interface PromptRunnerProps {
   isOpen: boolean;

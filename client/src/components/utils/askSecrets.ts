@@ -1,11 +1,23 @@
 /**
- * Utility function to ask for API secrets
- * This would integrate with different environments like Replit
+ * Utility function to prompt the user for API secrets
+ * This is a simplified implementation that will show a UI prompt
+ * for the user to enter their API keys
  */
-export function askSecrets(secretKeys: string[]): void {
-  console.log(`Requesting secrets: ${secretKeys.join(', ')}`);
+export function askSecrets(keys: string[]) {
+  const keyDescriptions: Record<string, string> = {
+    'OPENAI_API_KEY': 'OpenAI API Key',
+    'ANTHROPIC_API_KEY': 'Anthropic API Key',
+  };
+
+  // Create a prompt message
+  const keyNames = keys.map(key => keyDescriptions[key] || key).join(", ");
   
-  // In a real implementation, this would open a UI to ask for the secrets
-  const missingKeys = secretKeys.join(', ');
-  alert(`This feature requires the following API keys: ${missingKeys}. Please add them to your environment variables.`);
+  // Show a prompt to the user
+  const message = `This feature requires an API key (${keyNames}).\n\n` +
+    `Please visit the settings page to enter your API key.`;
+  
+  alert(message);
+  
+  // In a real implementation, this would open a modal or redirect to a settings page
+  return false;
 }
