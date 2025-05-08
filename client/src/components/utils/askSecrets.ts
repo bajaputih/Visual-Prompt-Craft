@@ -1,10 +1,11 @@
 /**
  * Utility function to ask for API secrets
- * This is a placeholder that would integrate with the Replit environment
+ * This would integrate with different environments like Replit
  */
 export function askSecrets(secretKeys: string[]): void {
   console.log(`Requesting secrets: ${secretKeys.join(', ')}`);
   
   // In a real implementation, this would open a UI to ask for the secrets
-  alert(`This feature requires the following API keys: ${secretKeys.join(', ')}. Please add them to your environment variables.`);
+  const missingKeys = secretKeys.join(', ');
+  alert(`This feature requires the following API keys: ${missingKeys}. Please add them to your environment variables.`);
 }

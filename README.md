@@ -32,6 +32,9 @@ Try the live demo: [Visual Prompt Craft](https://visual-prompt-craft.vercel.app)
 - **Parameter Management** - Define and manage variables within your prompts
 - **Conditional Flows** - Create prompts with decision points and branches
 - **Export & Import** - Share your prompt designs with others
+- **AI Integration** - Direct OpenAI API integration for testing prompts
+- **Conversation Import** - Import and convert conversations from ChatGPT or Claude
+- **Enhanced Zoom Controls** - Zoom in/out and toggle grid for better visualization
 
 ## 🧩 Node Types
 
@@ -64,6 +67,7 @@ Try the live demo: [Visual Prompt Craft](https://visual-prompt-craft.vercel.app)
 - **Backend**: Express, Node.js
 - **State Management**: React Query, Custom Hooks
 - **Styling**: Tailwind CSS with custom theme
+- **AI Integration**: OpenAI API, Anthropic Claude API support
 
 ## 🚀 Getting Started
 
