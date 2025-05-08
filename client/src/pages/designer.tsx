@@ -181,6 +181,7 @@ export default function Designer() {
         isGridVisible={isGridVisible}
         zoomLevel={zoomLevel}
         openImportDialog={openImportDialog}
+        openTemplateGallery={openTemplateGallery}
       />
       
       <div className="flex flex-1 overflow-hidden">

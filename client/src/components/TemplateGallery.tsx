@@ -55,15 +55,25 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
   const handleSelectTemplate = (templateId: string) => {
     const template = promptTemplates[templateId as keyof typeof promptTemplates];
     if (template && template.elements) {
-      // Make sure all optional fields like parameters are properly initialized
+      // Make sure all optional fields like parameters are properly initialized and converted to strings
       const processedElements: FlowElements = {
-        nodes: template.elements.nodes.map(node => ({
-          ...node,
-          data: {
-            ...node.data,
-            parameters: node.data.parameters || {}
+        nodes: template.elements.nodes.map(node => {
+          // Convert all parameter values to strings to satisfy the Record<string, string> requirement
+          const processedParameters: Record<string, string> = {};
+          if (node.data.parameters) {
+            Object.entries(node.data.parameters).forEach(([key, value]) => {
+              processedParameters[key] = String(value); // Convert all values to strings
+            });
           }
-        })),
+          
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              parameters: processedParameters
+            }
+          };
+        }),
         edges: template.elements.edges
       };
       
@@ -76,16 +86,16 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[900px] max-h-[90vh]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">قوالب التصميم</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Template Gallery</DialogTitle>
           <DialogDescription>
-            اختر من مجموعة القوالب الجاهزة وابدأ تصميم البرومبتات بسرعة
+            Choose from our pre-built templates to quickly design effective prompts
           </DialogDescription>
         </DialogHeader>
         
         <div className="relative mb-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="بحث عن قالب..."
+            placeholder="Search templates..."
             className="pl-8 w-full bg-background"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -95,7 +105,7 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
         <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory}>
           <TabsList className="mb-4 flex flex-wrap h-auto p-1 overflow-x-auto">
             <TabsTrigger value="all" className="rounded">
-              الكل
+              All
             </TabsTrigger>
             {categories.map(category => (
               <TabsTrigger key={category} value={category} className="rounded">
@@ -129,7 +139,7 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
                                 onClick={() => handleSelectTemplate(template.id)}
                                 className="w-full"
                               >
-                                استخدام القالب
+                                Use Template
                               </Button>
                             </CardFooter>
                           </Card>
@@ -160,7 +170,7 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
                           onClick={() => handleSelectTemplate(template.id)}
                           className="w-full"
                         >
-                          استخدام القالب
+                          Use Template
                         </Button>
                       </CardFooter>
                     </Card>

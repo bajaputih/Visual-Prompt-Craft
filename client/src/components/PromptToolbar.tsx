@@ -77,7 +77,8 @@ export default function PromptToolbar({
   onToggleGrid,
   isGridVisible = false,
   zoomLevel = 1,
-  openImportDialog
+  openImportDialog,
+  openTemplateGallery
 }: PromptToolbarProps) {
   const [, setLocation] = useLocation();
   const navigate = (path: string) => setLocation(path);
@@ -266,6 +267,16 @@ export default function PromptToolbar({
           >
             <Upload className="mr-1 h-3 w-3" />
             Import
+          </Button>
+
+          <Button 
+            size="sm" 
+            variant="outline" 
+            className="text-xs h-8 px-3"
+            onClick={() => openTemplateGallery && openTemplateGallery()}
+          >
+            <PanelTop className="mr-1 h-3 w-3" />
+            Templates
           </Button>
           
           {/* Hidden file input for import feature */}
