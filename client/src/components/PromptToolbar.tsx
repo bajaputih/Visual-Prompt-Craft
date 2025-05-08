@@ -59,6 +59,7 @@ interface PromptToolbarProps {
   onToggleGrid?: () => void;
   isGridVisible?: boolean;
   zoomLevel?: number;
+  openImportDialog?: () => void;
 }
 
 export default function PromptToolbar({
@@ -74,7 +75,8 @@ export default function PromptToolbar({
   onImport,
   onToggleGrid,
   isGridVisible = false,
-  zoomLevel = 1
+  zoomLevel = 1,
+  openImportDialog
 }: PromptToolbarProps) {
   const [, setLocation] = useLocation();
   const navigate = (path: string) => setLocation(path);
@@ -145,7 +147,12 @@ export default function PromptToolbar({
   };
   
   const handleImportClick = () => {
-    if (fileInputRef.current) {
+    // If conversation import dialog is available, open it
+    if (openImportDialog) {
+      openImportDialog();
+    } 
+    // Otherwise fallback to file input for traditional JSON import
+    else if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };

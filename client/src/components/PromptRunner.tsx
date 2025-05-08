@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
+import { customApiRequest } from '@/lib/customApiRequest';
 import { FlowElements } from '@shared/schema';
 import { askSecrets } from './utils/askSecrets';
 
@@ -46,13 +47,13 @@ export default function PromptRunner({ isOpen, onClose, elements }: PromptRunner
       setIsRunning(true);
       setResult('');
       
-      const response = await apiRequest('/api/execute-prompt', {
+      const response = await customApiRequest('/api/execute-prompt', {
         method: 'POST',
-        body: JSON.stringify({
+        body: {
           elements,
           userInputs,
           model: 'gpt-4o' // Use the latest model
-        }),
+        },
       });
       
       if (response.error && response.missingKey) {

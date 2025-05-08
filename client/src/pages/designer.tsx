@@ -68,7 +68,13 @@ export default function Designer() {
     zoomLevel,
     toggleGrid,
     isGridVisible,
-    importFlow
+    importFlow,
+    // Dialog states
+    isPromptRunnerOpen,
+    closePromptRunner,
+    isImportDialogOpen,
+    openImportDialog,
+    closeImportDialog
   } = usePromptDesigner();
 
   // Save prompt mutation
@@ -170,6 +176,7 @@ export default function Designer() {
         onToggleGrid={toggleGrid}
         isGridVisible={isGridVisible}
         zoomLevel={zoomLevel}
+        openImportDialog={openImportDialog}
       />
       
       <div className="flex flex-1 overflow-hidden">
@@ -250,6 +257,20 @@ export default function Designer() {
           )}
         </div>
       </div>
+      
+      {/* Prompt Runner Dialog */}
+      <PromptRunner
+        isOpen={isPromptRunnerOpen}
+        onClose={closePromptRunner}
+        elements={getElements()}
+      />
+      
+      {/* Import Conversation Dialog */}
+      <ImportConversation
+        isOpen={isImportDialogOpen}
+        onClose={closeImportDialog}
+        onImport={importFlow}
+      />
     </div>
   );
 }
