@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import * as wouter from "wouter";
 const { useLocation } = wouter;
 import { useMutation } from "@tanstack/react-query";
@@ -9,6 +9,41 @@ import { apiRequest } from "@/lib/queryClient";
 import { queryClient } from "@/lib/queryClient";
 import { Prompt, FlowElements } from "@shared/schema";
 import PromptPreview from "@/components/PromptPreview";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { 
+  Save, 
+  Download, 
+  Upload, 
+  Undo2, 
+  Redo2, 
+  Eye, 
+  Play, 
+  ZoomIn, 
+  ZoomOut, 
+  Grid, 
+  X, 
+  Trash2, 
+  Info,
+  PanelTop
+} from "lucide-react";
 
 interface PromptToolbarProps {
   prompt: Prompt | null;
