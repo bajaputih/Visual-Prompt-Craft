@@ -71,21 +71,21 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     // Find source and target nodes to get their types
     nodes.forEach(node => {
       if (node.id === connection.source) {
-        sourceType = node.type;
+        sourceType = node.type || '';
       }
       if (node.id === connection.target) {
-        targetType = node.type;
+        targetType = node.type || '';
       }
     });
     
     // Determine edge type based on node types
     let edgeType = 'default';
     
-    if (sourceType === 'condition') {
+    if (sourceType === NodeType.CONDITION) {
       edgeType = 'dashed';
-    } else if (sourceType === 'filter') {
+    } else if (sourceType === NodeType.FILTER) {
       edgeType = 'warning';
-    } else if (sourceType === 'process' && targetType === 'output') {
+    } else if (sourceType === NodeType.PROCESS && targetType === NodeType.OUTPUT) {
       edgeType = 'success';
     }
     
