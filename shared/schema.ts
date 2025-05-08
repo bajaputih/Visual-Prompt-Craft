@@ -38,6 +38,12 @@ export type Prompt = typeof prompts.$inferSelect;
 
 // Node types enumeration
 export const NodeType = {
+  input: "input",
+  process: "process",
+  filter: "filter",
+  condition: "condition",
+  output: "output",
+  // Support for backward compatibility
   INPUT: "input",
   PROCESS: "process",
   FILTER: "filter",

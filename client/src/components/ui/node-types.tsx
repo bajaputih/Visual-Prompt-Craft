@@ -229,9 +229,17 @@ const EnhancedOutputNode = withNodeFeatures(OutputNode);
 
 // Define node types object to be used with ReactFlow
 export const nodeTypes = {
+  // Small-case variants
   input: EnhancedInputNode,
   process: EnhancedProcessNode,
   filter: EnhancedFilterNode,
   condition: EnhancedConditionNode,
   output: EnhancedOutputNode,
+  
+  // Upper-case variants for backward compatibility
+  INPUT: EnhancedInputNode,
+  PROCESS: EnhancedProcessNode,
+  FILTER: EnhancedFilterNode,
+  CONDITION: EnhancedConditionNode,
+  OUTPUT: EnhancedOutputNode,
 };
