@@ -55,7 +55,19 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
   const handleSelectTemplate = (templateId: string) => {
     const template = promptTemplates[templateId as keyof typeof promptTemplates];
     if (template && template.elements) {
-      onSelectTemplate(template.elements);
+      // Make sure all optional fields like parameters are properly initialized
+      const processedElements: FlowElements = {
+        nodes: template.elements.nodes.map(node => ({
+          ...node,
+          data: {
+            ...node.data,
+            parameters: node.data.parameters || {}
+          }
+        })),
+        edges: template.elements.edges
+      };
+      
+      onSelectTemplate(processedElements);
       onClose();
     }
   };

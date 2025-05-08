@@ -60,6 +60,7 @@ interface PromptToolbarProps {
   isGridVisible?: boolean;
   zoomLevel?: number;
   openImportDialog?: () => void;
+  openTemplateGallery?: () => void;
 }
 
 export default function PromptToolbar({

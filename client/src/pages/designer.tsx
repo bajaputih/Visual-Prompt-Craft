@@ -16,6 +16,7 @@ import NodeProperties from "@/components/NodeProperties";
 import PromptToolbar from "@/components/PromptToolbar";
 import PromptRunner from "@/components/PromptRunner";
 import ImportConversation from "@/components/ImportConversation";
+import TemplateGallery from "@/components/TemplateGallery";
 import { nodeTypes } from "@/components/ui/node-types";
 import { edgeTypes } from "@/components/ui/edge-types";
 import { usePromptDesigner } from "@/hooks/use-prompt-designer";
@@ -74,7 +75,10 @@ export default function Designer() {
     closePromptRunner,
     isImportDialogOpen,
     openImportDialog,
-    closeImportDialog
+    closeImportDialog,
+    isTemplateGalleryOpen,
+    openTemplateGallery,
+    closeTemplateGallery
   } = usePromptDesigner();
 
   // Save prompt mutation
@@ -270,6 +274,13 @@ export default function Designer() {
         isOpen={isImportDialogOpen}
         onClose={closeImportDialog}
         onImport={importFlow}
+      />
+      
+      {/* Template Gallery Dialog */}
+      <TemplateGallery
+        isOpen={isTemplateGalleryOpen}
+        onClose={closeTemplateGallery}
+        onSelectTemplate={importFlow}
       />
     </div>
   );

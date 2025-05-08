@@ -27,6 +27,7 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
   // Dialog states
   const [isPromptRunnerOpen, setIsPromptRunnerOpen] = useState(false);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
+  const [isTemplateGalleryOpen, setIsTemplateGalleryOpen] = useState(false);
   
   // UI control states
   const [zoomLevel, setZoomLevel] = useState(1); // Default zoom level
@@ -342,9 +343,13 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     setIsImportDialogOpen(false); // Close the import dialog after successful import
   }, [saveToHistory, setElements]);
 
-  // Open import dialog
+  // Open dialogs
   const openImportDialog = useCallback(() => {
     setIsImportDialogOpen(true);
+  }, []);
+
+  const openTemplateGallery = useCallback(() => {
+    setIsTemplateGalleryOpen(true);
   }, []);
 
   // Close dialogs
@@ -354,6 +359,10 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
 
   const closeImportDialog = useCallback(() => {
     setIsImportDialogOpen(false);
+  }, []);
+  
+  const closeTemplateGallery = useCallback(() => {
+    setIsTemplateGalleryOpen(false);
   }, []);
 
   return {
@@ -391,6 +400,9 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     closePromptRunner,
     isImportDialogOpen,
     openImportDialog,
-    closeImportDialog
+    closeImportDialog,
+    isTemplateGalleryOpen,
+    openTemplateGallery,
+    closeTemplateGallery
   };
 }
