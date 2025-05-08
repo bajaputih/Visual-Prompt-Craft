@@ -24,6 +24,10 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
   const [edges, setEdges] = useState<Edge[]>(initialElements?.edges || []);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   
+  // Dialog states
+  const [isPromptRunnerOpen, setIsPromptRunnerOpen] = useState(false);
+  const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
+  
   // UI control states
   const [zoomLevel, setZoomLevel] = useState(1); // Default zoom level
   const [isGridVisible, setIsGridVisible] = useState(true); // Show grid by default
@@ -289,12 +293,11 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     setEdges(next.edges);
   }, [nodes, edges]);
 
-  // Run/Execute functionality
+  // Run/Execute functionality - opens the prompt runner
   const run = useCallback(() => {
     console.log('Running prompt with configuration:', { nodes, edges });
-    // Here you would implement the actual execution logic
-    alert('Prompt execution is a placeholder in this version.');
-  }, [nodes, edges]);
+    setIsPromptRunnerOpen(true);
+  }, [nodes, edges, setIsPromptRunnerOpen]);
 
   // Get current elements as FlowElements for saving
   const getElements = useCallback((): FlowElements => {
@@ -369,6 +372,11 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     zoomLevel,
     toggleGrid,
     isGridVisible,
-    importFlow
+    importFlow,
+    // Dialog states
+    isPromptRunnerOpen,
+    setIsPromptRunnerOpen,
+    isImportDialogOpen,
+    setIsImportDialogOpen
   };
 }
