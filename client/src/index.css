@@ -64,6 +64,10 @@
     @apply border-border;
   }
 
+  html {
+    direction: rtl;
+  }
+
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
@@ -82,6 +86,18 @@
 
   h4 {
     @apply text-lg font-semibold tracking-tight;
+  }
+  
+  /* Specific elements overrides for RTL */
+  .ltr, .reactflow, .reactflow__controls, .react-flow__attribution {
+    direction: ltr !important;
+  }
+  
+  /* Add Noto Sans Arabic font for better Arabic text rendering */
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+  
+  .font-arabic {
+    font-family: 'Noto Sans Arabic', sans-serif;
   }
 }
 
@@ -146,4 +162,55 @@
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* React Flow Node Styling */
+.dark .reactflow__node {
+  @apply shadow-[0_4px_12px_rgba(0,0,0,0.5)];
+}
+
+.dark .reactflow__handle {
+  @apply bg-muted border-border;
+}
+
+.dark .reactflow__edge-path {
+  @apply stroke-primary;
+}
+
+.dark .reactflow__controls-button {
+  @apply border-border bg-card text-foreground;
+}
+
+.dark .reactflow__controls-button svg {
+  @apply fill-foreground;
+}
+
+.dark .reactflow__controls-button:hover {
+  @apply bg-muted;
+}
+
+/* Animation for drag and drop */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--primary), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(var(--primary), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--primary), 0);
+  }
+}
+
+.reactflow__node.drag-over {
+  animation: pulse 1.5s infinite;
+}
+
+/* Improved React Flow Controls */
+.reactflow__controls {
+  @apply rounded-lg overflow-hidden shadow-md;
+}
+
+.dark .react-flow__attribution {
+  @apply bg-transparent text-muted-foreground;
 }

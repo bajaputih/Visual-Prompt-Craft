@@ -161,39 +161,48 @@ export default function Designer() {
         
         {/* Flow Canvas */}
         <div 
-          className="flex-1 relative bg-muted/30 designer-grid" 
+          className="flex-1 relative bg-muted/30 designer-grid h-full w-full" 
           ref={reactFlowWrapper}
+          style={{ minHeight: '500px' }}
         >
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onNodeClick={onNodeClick}
-            onPaneClick={onPaneClick}
-            nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
-            onDragOver={onDragOver}
-            onDrop={onDrop}
-            fitView
-            defaultEdgeOptions={{ 
-              animated: true,
-              style: { stroke: 'hsl(var(--primary))', strokeWidth: 2 } 
-            }}
-            proOptions={{ hideAttribution: true }}
-          >
-            <Background gap={20} color="rgba(0, 0, 0, 0.03)" />
-            <Controls 
-              position="bottom-right"
-              style={{ 
-                background: 'hsl(var(--card))', 
-                borderColor: 'hsl(var(--border))',
-                borderRadius: 'var(--radius)',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+          <div className="absolute inset-0">
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              onNodeClick={onNodeClick}
+              onPaneClick={onPaneClick}
+              nodeTypes={nodeTypes}
+              edgeTypes={edgeTypes}
+              onDragOver={onDragOver}
+              onDrop={onDrop}
+              fitView
+              defaultEdgeOptions={{ 
+                animated: true,
+                style: { stroke: 'hsl(var(--primary))', strokeWidth: 2 } 
               }}
-            />
-          </ReactFlow>
+              proOptions={{ hideAttribution: true }}
+              className="h-full w-full"
+            >
+              <Background gap={20} color="rgba(0, 0, 0, 0.03)" />
+              <Controls 
+                position="bottom-right"
+                style={{ 
+                  background: 'hsl(var(--card))', 
+                  borderColor: 'hsl(var(--border))',
+                  borderRadius: 'var(--radius)',
+                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+                }}
+              />
+              <div className="absolute top-4 right-4 z-10 flex gap-2">
+                <div className="bg-card/80 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium border border-border shadow-sm">
+                  {nodes.length} عقدة | {edges.length} اتصال
+                </div>
+              </div>
+            </ReactFlow>
+          </div>
         </div>
         
         {/* Properties Panel */}
