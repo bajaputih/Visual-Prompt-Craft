@@ -36,7 +36,7 @@ export default function Designer() {
     enabled: !!params.id
   });
 
-  // Initialize prompt designer hook
+  // Initialize prompt designer hook with enhanced functionality
   const {
     nodes,
     edges,
@@ -59,7 +59,14 @@ export default function Designer() {
     getElements,
     setElements,
     canUndo,
-    canRedo
+    canRedo,
+    // New zoom and grid controls
+    zoomIn,
+    zoomOut,
+    zoomLevel,
+    toggleGrid,
+    isGridVisible,
+    importFlow
   } = usePromptDesigner();
 
   // Save prompt mutation
@@ -155,6 +162,12 @@ export default function Designer() {
         onRun={run}
         canUndo={canUndo}
         canRedo={canRedo}
+        onZoomIn={zoomIn}
+        onZoomOut={zoomOut}
+        onImport={importFlow}
+        onToggleGrid={toggleGrid}
+        isGridVisible={isGridVisible}
+        zoomLevel={zoomLevel}
       />
       
       <div className="flex flex-1 overflow-hidden">
@@ -189,7 +202,7 @@ export default function Designer() {
               proOptions={{ hideAttribution: true }}
               className="h-full w-full"
             >
-              <Background gap={20} color="rgba(0, 0, 0, 0.03)" />
+              {isGridVisible && <Background gap={20} color="rgba(0, 0, 0, 0.03)" />}
               <Controls 
                 position="bottom-right"
                 style={{ 

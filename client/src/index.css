@@ -273,3 +273,73 @@
 .dark .react-flow__attribution {
   @apply bg-transparent text-muted-foreground;
 }
+
+/* Node Context Menu enhancements */
+.context-menu-item {
+  @apply flex items-center px-2 py-1.5 text-sm rounded-sm transition-colors hover:bg-primary/10 cursor-pointer;
+}
+
+.context-menu-item-danger {
+  @apply text-destructive hover:bg-destructive/10;
+}
+
+/* Node Hover Preview styles */
+.node-preview-content {
+  @apply max-w-md p-3 bg-card/90 backdrop-blur-sm border border-border rounded-lg shadow-lg;
+}
+
+.node-preview-header {
+  @apply flex items-center justify-between pb-2 mb-2 border-b border-border;
+}
+
+.node-preview-header-title {
+  @apply font-medium text-sm;
+}
+
+.node-preview-header-type {
+  @apply text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary;
+}
+
+.node-preview-body {
+  @apply text-xs text-muted-foreground;
+}
+
+/* Border styles for different node types */
+.node-input {
+  border-left: 3px solid hsl(var(--primary));
+}
+
+.node-process {
+  border-left: 3px solid hsl(var(--success));
+}
+
+.node-filter {
+  border-left: 3px solid hsl(var(--warning));
+}
+
+.node-condition {
+  border-left: 3px solid hsl(var(--info));
+}
+
+.node-output {
+  border-left: 3px solid hsl(var(--accent));
+}
+
+/* Badge styles for locked nodes */
+.node-locked-badge {
+  @apply absolute -top-2 -right-2 bg-background text-xs px-1.5 py-0.5 rounded-full shadow-sm border border-border flex items-center gap-1;
+}
+
+/* Toolbar buttons with active state */
+.toolbar-button[data-active=true] {
+  @apply bg-primary/20 text-primary;
+}
+
+/* Zoom controls */
+.zoom-controls {
+  @apply flex bg-muted/40 rounded-md p-0.5 mr-2;
+}
+
+.zoom-value {
+  @apply px-2 py-1 text-xs text-muted-foreground;
+}
