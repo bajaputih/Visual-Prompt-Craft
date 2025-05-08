@@ -24,6 +24,10 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
   const [edges, setEdges] = useState<Edge[]>(initialElements?.edges || []);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   
+  // UI control states
+  const [zoomLevel, setZoomLevel] = useState(1); // Default zoom level
+  const [isGridVisible, setIsGridVisible] = useState(true); // Show grid by default
+  
   // History for undo/redo
   const historyRef = useRef<{
     past: { nodes: Node[]; edges: Edge[] }[];
@@ -305,6 +309,36 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     if (elements.nodes) setNodes(elements.nodes);
     if (elements.edges) setEdges(elements.edges);
   }, []);
+  
+  // Zoom control functions
+  const zoomIn = useCallback(() => {
+    if (!reactFlowInstance) return;
+    
+    // Increment zoom by 10% each time, max zoom 2.0 (200%)
+    const newZoom = Math.min(zoomLevel + 0.1, 2.0);
+    reactFlowInstance.zoomTo(newZoom);
+    setZoomLevel(newZoom);
+  }, [reactFlowInstance, zoomLevel]);
+  
+  const zoomOut = useCallback(() => {
+    if (!reactFlowInstance) return;
+    
+    // Decrement zoom by 10% each time, min zoom 0.5 (50%)
+    const newZoom = Math.max(zoomLevel - 0.1, 0.5);
+    reactFlowInstance.zoomTo(newZoom);
+    setZoomLevel(newZoom);
+  }, [reactFlowInstance, zoomLevel]);
+  
+  // Toggle grid visibility
+  const toggleGrid = useCallback(() => {
+    setIsGridVisible(prev => !prev);
+  }, []);
+  
+  // Import flow from JSON
+  const importFlow = useCallback((importedElements: FlowElements) => {
+    saveToHistory();
+    setElements(importedElements);
+  }, [saveToHistory, setElements]);
 
   return {
     nodes,
@@ -328,6 +362,13 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     getElements,
     setElements,
     canUndo: historyRef.current.past.length > 0,
-    canRedo: historyRef.current.future.length > 0
+    canRedo: historyRef.current.future.length > 0,
+    // New zoom and grid controls
+    zoomIn,
+    zoomOut,
+    zoomLevel,
+    toggleGrid,
+    isGridVisible,
+    importFlow
   };
 }

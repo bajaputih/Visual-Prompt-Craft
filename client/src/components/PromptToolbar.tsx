@@ -53,6 +53,12 @@ interface PromptToolbarProps {
   onRun: () => void;
   canUndo: boolean;
   canRedo: boolean;
+  onZoomIn?: () => void;
+  onZoomOut?: () => void;
+  onImport?: (importedElements: FlowElements) => void;
+  onToggleGrid?: () => void;
+  isGridVisible?: boolean;
+  zoomLevel?: number;
 }
 
 export default function PromptToolbar({
@@ -62,13 +68,21 @@ export default function PromptToolbar({
   onRedo,
   onRun,
   canUndo,
-  canRedo
+  canRedo,
+  onZoomIn,
+  onZoomOut,
+  onImport,
+  onToggleGrid,
+  isGridVisible = false,
+  zoomLevel = 1
 }: PromptToolbarProps) {
   const [, setLocation] = useLocation();
   const navigate = (path: string) => setLocation(path);
   const { toast } = useToast();
   const [promptName, setPromptName] = useState(prompt?.name || "Untitled Prompt");
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Save prompt mutation
   const savePromptMutation = useMutation({
@@ -129,6 +143,67 @@ export default function PromptToolbar({
       description: `"${promptName}" exported successfully`,
     });
   };
+  
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const result = event.target?.result;
+        if (typeof result !== 'string') return;
+        
+        const importData = JSON.parse(result);
+        // Validate the imported data
+        if (
+          importData.elements && 
+          Array.isArray(importData.elements.nodes) && 
+          Array.isArray(importData.elements.edges)
+        ) {
+          // Call the import handler function
+          if (onImport) {
+            onImport(importData.elements);
+            setPromptName(importData.name || "Imported Prompt");
+            toast({
+              title: "Import Successful",
+              description: "Prompt imported successfully",
+            });
+          }
+        } else {
+          toast({
+            title: "Import Error",
+            description: "Invalid format for imported prompt file",
+            variant: "destructive",
+          });
+        }
+      } catch (err) {
+        toast({
+          title: "Import Error",
+          description: `Failed to parse file: ${err instanceof Error ? err.message : 'Unknown error'}`,
+          variant: "destructive",
+        });
+      }
+    };
+    reader.readAsText(file);
+    
+    // Reset the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+  
+  const handleToggleGrid = () => {
+    if (onToggleGrid) {
+      onToggleGrid();
+    }
+  };
 
   return (
     <div className="bg-card border-b border-border px-4 py-3 flex justify-between items-center">
@@ -158,9 +233,7 @@ export default function PromptToolbar({
               </span>
             ) : (
               <>
-                <svg className="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                </svg>
+                <Save className="mr-1 h-3 w-3" />
                 Save
               </>
             )}
@@ -173,15 +246,101 @@ export default function PromptToolbar({
             onClick={handleExport}
             disabled={!prompt}
           >
-            <svg className="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-            </svg>
+            <Download className="mr-1 h-3 w-3" />
             Export
           </Button>
+          
+          <Button 
+            size="sm" 
+            variant="outline" 
+            className="text-xs h-8 px-3"
+            onClick={handleImportClick}
+          >
+            <Upload className="mr-1 h-3 w-3" />
+            Import
+          </Button>
+          
+          {/* Hidden file input for import feature */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept=".json"
+            className="hidden"
+          />
         </div>
       </div>
       
       <div className="flex items-center gap-2">
+        {/* Display current zoom level */}
+        {zoomLevel && (
+          <Badge variant="outline" className="text-xs mr-2">
+            Zoom: {Math.round(zoomLevel * 100)}%
+          </Badge>
+        )}
+        
+        {/* Zoom controls */}
+        <div className="flex bg-muted/40 rounded-md p-0.5 mr-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-xs h-8 w-8 p-0 rounded-sm"
+                  onClick={onZoomIn}
+                  disabled={!onZoomIn}
+                >
+                  <ZoomIn className="h-3 w-3" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Zoom In</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-xs h-8 w-8 p-0 rounded-sm"
+                  onClick={onZoomOut}
+                  disabled={!onZoomOut}
+                >
+                  <ZoomOut className="h-3 w-3" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Zoom Out</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-xs h-8 w-8 p-0 rounded-sm"
+                  onClick={handleToggleGrid}
+                  disabled={!onToggleGrid}
+                  data-active={isGridVisible}
+                >
+                  <Grid className={`h-3 w-3 ${isGridVisible ? 'text-primary' : ''}`} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Toggle Grid</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        
+        {/* Undo/Redo controls */}
         <div className="flex bg-muted/40 rounded-md p-0.5 mr-2">
           <Button
             size="sm"
@@ -190,11 +349,7 @@ export default function PromptToolbar({
             onClick={onUndo}
             disabled={!canUndo}
           >
-            <svg className="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h10a4 4 0 0 1 0 8H9" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 10l5-5" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 10l5 5" />
-            </svg>
+            <Undo2 className="mr-1 h-3 w-3" />
             Undo
           </Button>
           <Button
@@ -204,37 +359,29 @@ export default function PromptToolbar({
             onClick={onRedo}
             disabled={!canRedo}
           >
-            <svg className="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 10h-10a4 4 0 0 0 0 8h4" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 10l-5-5" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 10l-5 5" />
-            </svg>
+            <Redo2 className="mr-1 h-3 w-3" />
             Redo
           </Button>
         </div>
         
+        {/* Preview button */}
         <Button
           size="sm"
           variant="secondary"
           className="text-xs h-8 px-3 mr-2"
           onClick={() => setIsPreviewOpen(true)}
         >
-          <svg className="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
+          <Eye className="mr-1 h-3 w-3" />
           Preview
         </Button>
         
+        {/* Run button */}
         <Button
           size="sm"
           className="text-xs bg-primary/90 hover:bg-primary h-8 px-4"
           onClick={onRun}
         >
-          <svg className="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+          <Play className="mr-1 h-3 w-3" />
           Run Prompt
         </Button>
       </div>
