@@ -60,6 +60,215 @@ export const promptTemplates = {
     category: "Content Creation",
     elements: initialElements
   },
+  
+  // Developer specific templates
+  codeReview: {
+    name: "Code Review Assistant",
+    description: "Helps with code review and suggestions",
+    category: "Development",
+    elements: {
+      nodes: [
+        {
+          id: "1",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 100 },
+          data: { 
+            label: "Code Input", 
+            description: "Paste code to review" 
+          }
+        },
+        {
+          id: "2",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 250 },
+          data: { 
+            label: "Requirements", 
+            description: "Project requirements or context" 
+          }
+        },
+        {
+          id: "3",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 100 },
+          data: { 
+            label: "Code Analysis", 
+            description: "Check for bugs and issues",
+            parameters: {
+              lang: "javascript"
+            },
+            template: "Analyze the following {{lang}} code for bugs, code quality issues, and potential improvements. Identify any security vulnerabilities or performance issues.\n\nCode:\n```{{lang}}\n{{Code Input}}\n```\n\nRequirements:\n{{Requirements}}"
+          }
+        },
+        {
+          id: "4",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 250 },
+          data: { 
+            label: "Best Practices", 
+            description: "Recommend best practices",
+            parameters: {
+              style_guide: "airbnb"
+            },
+            template: "Review the code according to {{style_guide}} style guide and suggest improvements with examples.\n\nCode Analysis:\n{{Code Analysis}}"
+          }
+        },
+        {
+          id: "5",
+          type: "OUTPUT" as keyof typeof NodeType,
+          position: { x: 600, y: 175 },
+          data: { 
+            label: "Review Results", 
+            description: "Complete code review report" 
+          }
+        }
+      ],
+      edges: [
+        { id: "e1-3", source: "1", target: "3" },
+        { id: "e2-3", source: "2", target: "3" },
+        { id: "e3-4", source: "3", target: "4" },
+        { id: "e4-5", source: "4", target: "5" }
+      ]
+    }
+  },
+  
+  debugHelper: {
+    name: "Debugging Assistant",
+    description: "Helps analyze and fix code bugs",
+    category: "Development",
+    elements: {
+      nodes: [
+        {
+          id: "1",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 100 },
+          data: { 
+            label: "Buggy Code", 
+            description: "Code that isn't working properly" 
+          }
+        },
+        {
+          id: "2",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 250 },
+          data: { 
+            label: "Error Messages", 
+            description: "Stack traces or error outputs" 
+          }
+        },
+        {
+          id: "3",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 100 },
+          data: { 
+            label: "Bug Analysis", 
+            description: "Analyze root causes",
+            parameters: {
+              language: "javascript"
+            },
+            template: "Analyze the following {{language}} code and error messages to identify the root cause of the bug. Explain what is happening and why it's occurring.\n\nCode:\n```{{language}}\n{{Buggy Code}}\n```\n\nError Messages:\n```\n{{Error Messages}}\n```"
+          }
+        },
+        {
+          id: "4",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 250 },
+          data: { 
+            label: "Solution Generation", 
+            description: "Generate fix options",
+            parameters: {
+              detailed: "yes"
+            },
+            template: "Based on the bug analysis, provide {{detailed === 'yes' ? 'detailed' : 'concise'}} solutions to fix the issue. Include sample code and explanations for each approach.\n\nBug Analysis:\n{{Bug Analysis}}"
+          }
+        },
+        {
+          id: "5",
+          type: "OUTPUT" as keyof typeof NodeType,
+          position: { x: 600, y: 175 },
+          data: { 
+            label: "Debug Solution", 
+            description: "Complete debugging solution" 
+          }
+        }
+      ],
+      edges: [
+        { id: "e1-3", source: "1", target: "3" },
+        { id: "e2-3", source: "2", target: "3" },
+        { id: "e3-4", source: "3", target: "4" },
+        { id: "e4-5", source: "4", target: "5" }
+      ]
+    }
+  },
+  
+  apiDesign: {
+    name: "API Design Helper",
+    description: "Assists with designing robust RESTful APIs",
+    category: "Development",
+    elements: {
+      nodes: [
+        {
+          id: "1",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 100 },
+          data: { 
+            label: "Domain Model", 
+            description: "Key entities and relationships" 
+          }
+        },
+        {
+          id: "2",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 250 },
+          data: { 
+            label: "Requirements", 
+            description: "API requirements and constraints" 
+          }
+        },
+        {
+          id: "3",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 100 },
+          data: { 
+            label: "Endpoint Design", 
+            description: "Generate RESTful endpoints",
+            parameters: {
+              version: "v1",
+              style: "RESTful"
+            },
+            template: "Design a {{style}} API (version {{version}}) based on the following domain model and requirements. Include detailed endpoints, HTTP methods, URL structures, request/response examples, and status codes.\n\nDomain Model:\n{{Domain Model}}\n\nRequirements:\n{{Requirements}}"
+          }
+        },
+        {
+          id: "4",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 250 },
+          data: { 
+            label: "Schema Generation", 
+            description: "Create OpenAPI schema",
+            parameters: {
+              format: "OpenAPI 3.0"
+            },
+            template: "Convert the following API design into a {{format}} schema definition. Include all endpoints, data models, parameters, and responses.\n\nAPI Design:\n{{Endpoint Design}}"
+          }
+        },
+        {
+          id: "5",
+          type: "OUTPUT" as keyof typeof NodeType,
+          position: { x: 600, y: 175 },
+          data: { 
+            label: "API Documentation", 
+            description: "Complete API documentation" 
+          }
+        }
+      ],
+      edges: [
+        { id: "e1-3", source: "1", target: "3" },
+        { id: "e2-3", source: "2", target: "3" },
+        { id: "e3-4", source: "3", target: "4" },
+        { id: "e4-5", source: "4", target: "5" }
+      ]
+    }
+  },
   qaChain: {
     name: "Q&A Chain",
     description: "Answer questions based on provided context",
@@ -262,6 +471,91 @@ export const promptTemplates = {
       ]
     }
   },
+  architectureDesign: {
+    name: "Software Architecture Designer",
+    description: "Designs software architecture for new projects",
+    category: "Development",
+    elements: {
+      nodes: [
+        {
+          id: "1",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 100 },
+          data: { 
+            label: "Project Requirements", 
+            description: "Functional and non-functional requirements" 
+          }
+        },
+        {
+          id: "2",
+          type: "INPUT" as keyof typeof NodeType,
+          position: { x: 100, y: 250 },
+          data: { 
+            label: "Technology Constraints", 
+            description: "Tech stack limitations or preferences" 
+          }
+        },
+        {
+          id: "3",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 100 },
+          data: { 
+            label: "System Design", 
+            description: "High-level architecture design",
+            parameters: {
+              architecture_type: "microservices",
+              scalability: "high"
+            },
+            template: "Design a {{architecture_type}} architecture for a system with {{scalability}} scalability based on the following requirements and constraints. Include component diagrams, data flow, and technology choices.\n\nRequirements:\n{{Project Requirements}}\n\nTechnology Constraints:\n{{Technology Constraints}}"
+          }
+        },
+        {
+          id: "4",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 350, y: 250 },
+          data: { 
+            label: "Component Specification", 
+            description: "Detailed component design",
+            parameters: {
+              detail_level: "high"
+            },
+            template: "Based on the system design, provide {{detail_level === 'high' ? 'detailed' : 'basic'}} specifications for each component. Include interfaces, dependencies, data models, and implementation guidelines.\n\nSystem Design:\n{{System Design}}"
+          }
+        },
+        {
+          id: "5",
+          type: "PROCESS" as keyof typeof NodeType,
+          position: { x: 600, y: 100 },
+          data: { 
+            label: "Implementation Plan", 
+            description: "Development roadmap",
+            parameters: {
+              timeline: "3 months"
+            },
+            template: "Create an implementation plan and roadmap for developing this architecture over a {{timeline}} period. Include phases, key milestones, and resource allocation suggestions.\n\nArchitecture:\n{{System Design}}\n\nComponent Details:\n{{Component Specification}}"
+          }
+        },
+        {
+          id: "6",
+          type: "OUTPUT" as keyof typeof NodeType,
+          position: { x: 600, y: 250 },
+          data: { 
+            label: "Architecture Document", 
+            description: "Complete architecture specification" 
+          }
+        }
+      ],
+      edges: [
+        { id: "e1-3", source: "1", target: "3" },
+        { id: "e2-3", source: "2", target: "3" },
+        { id: "e3-4", source: "3", target: "4" },
+        { id: "e3-5", source: "3", target: "5" },
+        { id: "e4-5", source: "4", target: "5" },
+        { id: "e5-6", source: "5", target: "6" }
+      ]
+    }
+  },
+  
   ideaGeneration: {
     name: "Idea Generation",
     description: "Generate creative ideas for various purposes",
