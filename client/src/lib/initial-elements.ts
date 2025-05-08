@@ -1,4 +1,14 @@
 import { FlowElements, NodeType } from "@shared/schema";
+import {
+  sqlQueryGenerator,
+  dataVisualization,
+  statisticalAnalysis,
+  uiDesignSystem,
+  uxFlowDesigner,
+  seoArticleGenerator,
+  socialMediaContent,
+  emailSequence
+} from "./template-presets";
 
 // Default elements for a new prompt
 export const initialElements: FlowElements = {
@@ -624,5 +634,64 @@ export const promptTemplates = {
         { id: "e4-5", source: "4", target: "5" }
       ]
     }
+  },
+  
+  // Data Analysis Templates
+  sqlQueryGen: {
+    name: "SQL Query Generator",
+    description: "Generates optimized SQL queries from business questions",
+    category: "Data Analysis",
+    elements: sqlQueryGenerator
+  },
+  
+  dataViz: {
+    name: "Data Visualization Recommender",
+    description: "Recommends appropriate data visualizations",
+    category: "Data Analysis",
+    elements: dataVisualization
+  },
+  
+  statsAnalysis: {
+    name: "Statistical Analysis Helper",
+    description: "Helps select and implement statistical methods",
+    category: "Data Analysis",
+    elements: statisticalAnalysis
+  },
+  
+  // Design Templates
+  designSystem: {
+    name: "UI Design System Creator",
+    description: "Creates comprehensive design systems",
+    category: "Design",
+    elements: uiDesignSystem
+  },
+  
+  uxFlow: {
+    name: "UX Flow Designer",
+    description: "Designs user experience flows and screens",
+    category: "Design",
+    elements: uxFlowDesigner
+  },
+  
+  // Content Writing Templates
+  seoArticle: {
+    name: "SEO Article Generator",
+    description: "Creates SEO-optimized articles",
+    category: "Content Creation",
+    elements: seoArticleGenerator
+  },
+  
+  socialMedia: {
+    name: "Social Media Content Calendar",
+    description: "Creates multi-platform social media content",
+    category: "Content Creation",
+    elements: socialMediaContent
+  },
+  
+  emailCampaign: {
+    name: "Email Sequence Creator",
+    description: "Creates email marketing sequences",
+    category: "Content Creation", 
+    elements: emailSequence
   }
 };
