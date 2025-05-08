@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { queryClient } from "@/lib/queryClient";
 import { Prompt, FlowElements } from "@shared/schema";
+import PromptPreview from "@/components/PromptPreview";
 
 interface PromptToolbarProps {
   prompt: Prompt | null;
@@ -32,6 +33,7 @@ export default function PromptToolbar({
   const navigate = (path: string) => setLocation(path);
   const { toast } = useToast();
   const [promptName, setPromptName] = useState(prompt?.name || "Untitled Prompt");
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   
   // Save prompt mutation
   const savePromptMutation = useMutation({
@@ -178,6 +180,19 @@ export default function PromptToolbar({
         
         <Button
           size="sm"
+          variant="secondary"
+          className="text-xs h-8 px-3 mr-2"
+          onClick={() => setIsPreviewOpen(true)}
+        >
+          <svg className="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          Preview
+        </Button>
+        
+        <Button
+          size="sm"
           className="text-xs bg-primary/90 hover:bg-primary h-8 px-4"
           onClick={onRun}
         >
@@ -188,6 +203,13 @@ export default function PromptToolbar({
           Run Prompt
         </Button>
       </div>
+      
+      {/* Prompt Preview Modal */}
+      <PromptPreview 
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+        elements={elements}
+      />
     </div>
   );
 }
