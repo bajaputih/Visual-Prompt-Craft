@@ -136,7 +136,7 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
       
       // Basic validation
       if (!importedData.name || !importedData.elements) {
-        throw new Error("الملف المستورد غير صالح أو ينقصه بيانات أساسية");
+        throw new Error("The imported file is invalid or missing required data");
       }
       
       // Create the imported prompt
@@ -149,8 +149,8 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
       
     } catch (error) {
       toast({
-        title: "خطأ في الاستيراد",
-        description: `فشل استيراد الملف: ${error instanceof Error ? error.message : 'خطأ غير معروف'}`,
+        title: "Import Error",
+        description: `Failed to import file: ${error instanceof Error ? error.message : 'Unknown error'}`,
         variant: "destructive",
       });
     } finally {
@@ -162,27 +162,27 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>إنشاء Prompt جديد</DialogTitle>
+          <DialogTitle>Create New Prompt</DialogTitle>
           <DialogDescription>
-            قم بإنشاء prompt جديد أو استيراده من ملف سابق
+            Create a new prompt or import from an existing file
           </DialogDescription>
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
           <TabsList className="grid grid-cols-2 w-full">
-            <TabsTrigger value="create">إنشاء جديد</TabsTrigger>
-            <TabsTrigger value="import">استيراد</TabsTrigger>
+            <TabsTrigger value="create">Create New</TabsTrigger>
+            <TabsTrigger value="import">Import</TabsTrigger>
           </TabsList>
           
           <TabsContent value="create">
             <form onSubmit={handleSubmit}>
               <div className="space-y-4 py-2">
                 <div className="space-y-2">
-                  <Label htmlFor="name">اسم الـPrompt</Label>
+                  <Label htmlFor="name">Prompt Name</Label>
                   <Input
                     id="name"
                     name="name"
-                    placeholder="أدخل اسماً للـprompt"
+                    placeholder="Enter a name for the prompt"
                     value={promptData.name || ""}
                     onChange={handleChange}
                     required
@@ -190,30 +190,30 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="category">الفئة</Label>
+                  <Label htmlFor="category">Category</Label>
                   <Select 
                     value={promptData.category || ""} 
                     onValueChange={(value) => handleSelectChange("category", value)}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="اختر فئة" />
+                      <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Creative Writing">كتابة إبداعية</SelectItem>
-                      <SelectItem value="Data Analysis">تحليل بيانات</SelectItem>
-                      <SelectItem value="Customer Support">دعم العملاء</SelectItem>
-                      <SelectItem value="Programming">برمجة</SelectItem>
-                      <SelectItem value="Other">أخرى</SelectItem>
+                      <SelectItem value="Creative Writing">Creative Writing</SelectItem>
+                      <SelectItem value="Data Analysis">Data Analysis</SelectItem>
+                      <SelectItem value="Customer Support">Customer Support</SelectItem>
+                      <SelectItem value="Programming">Programming</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="description">الوصف (اختياري)</Label>
+                  <Label htmlFor="description">Description (optional)</Label>
                   <Textarea
                     id="description"
                     name="description"
-                    placeholder="صِف باختصار ماذا يفعل هذا الـprompt"
+                    placeholder="Briefly describe what this prompt does"
                     rows={3}
                     value={promptData.description || ""}
                     onChange={handleChange}
@@ -223,13 +223,13 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
               
               <DialogFooter className="mt-4">
                 <Button type="button" variant="outline" onClick={onClose}>
-                  إلغاء
+                  Cancel
                 </Button>
                 <Button 
                   type="submit" 
                   disabled={createPromptMutation.isPending}
                 >
-                  {createPromptMutation.isPending ? "جارِ الإنشاء..." : "إنشاء Prompt"}
+                  {createPromptMutation.isPending ? "Creating..." : "Create Prompt"}
                 </Button>
               </DialogFooter>
             </form>
@@ -238,9 +238,9 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
           <TabsContent value="import" className="space-y-4">
             <div className="border-2 border-dashed border-border rounded-md p-6 text-center space-y-4">
               <FileUp className="h-10 w-10 mx-auto text-muted-foreground" />
-              <h3 className="text-lg font-medium">استيراد ملف Prompt</h3>
+              <h3 className="text-lg font-medium">Import Prompt File</h3>
               <p className="text-sm text-muted-foreground">
-                اسحب وأفلت ملف JSON أو انقر لاختيار الملف
+                Drag and drop a JSON file or click to select a file
               </p>
               
               <input
@@ -258,7 +258,7 @@ export default function NewPromptModal({ isOpen, onClose }: NewPromptModalProps)
                 className="mt-2"
               >
                 <Upload className="mr-2 h-4 w-4" />
-                اختر ملفاً
+                Choose File
               </Button>
               
               {importFile && (
