@@ -140,6 +140,19 @@ export default function Designer() {
       return () => clearTimeout(timeoutId);
     }
   }, [nodes, edges, prompt, isInitialized]);
+  
+  // Add event listener for opening template gallery from sidebar
+  useEffect(() => {
+    const handleOpenTemplateGallery = () => {
+      openTemplateGallery();
+    };
+    
+    window.addEventListener('open-template-gallery', handleOpenTemplateGallery);
+    
+    return () => {
+      window.removeEventListener('open-template-gallery', handleOpenTemplateGallery);
+    };
+  }, [openTemplateGallery]);
 
   if (isLoading) {
     return (

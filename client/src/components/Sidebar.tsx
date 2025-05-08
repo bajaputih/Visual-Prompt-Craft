@@ -40,7 +40,7 @@ export default function Sidebar({ onNewPromptClick, className = "" }: SidebarPro
 
   return (
     <aside className={`w-64 bg-card border-r border-border shadow-sm flex flex-col h-full ${className}`}>
-      <div className="p-4 border-b border-border">
+      <div className="p-4 space-y-2 border-b border-border">
         <Button
           onClick={onNewPromptClick}
           className="w-full"
@@ -48,6 +48,14 @@ export default function Sidebar({ onNewPromptClick, className = "" }: SidebarPro
         >
           <FilePlus className="mr-2 h-4 w-4" />
           New Prompt
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => window.dispatchEvent(new CustomEvent('open-template-gallery'))}
+        >
+          <FolderOpen className="mr-2 h-4 w-4" />
+          Templates Gallery
         </Button>
       </div>
       <ScrollArea className="flex-1 p-4">
@@ -85,27 +93,7 @@ export default function Sidebar({ onNewPromptClick, className = "" }: SidebarPro
             )}
           </div>
           
-          {categories.length > 0 && (
-            <div>
-              <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                Categories
-              </h2>
-              <ul className="space-y-1">
-                {categories.map((category: string, index: number) => (
-                  <li key={index}>
-                    <a 
-                      href="#" 
-                      className="text-foreground hover:bg-muted hover:text-foreground
-                      rounded-md px-2 py-2 flex items-center text-sm transition-colors"
-                    >
-                      <FolderOpen className="mr-3 h-4 w-4 text-muted-foreground" />
-                      <span className="truncate">{category}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {/* Categories section removed as requested */}
         </div>
       </ScrollArea>
       <div className="p-4 border-t border-border">
