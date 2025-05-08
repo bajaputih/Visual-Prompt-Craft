@@ -39,11 +39,12 @@ export default function Sidebar({ onNewPromptClick, className = "" }: SidebarPro
   }, [prompts]);
 
   return (
-    <aside className={`w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col h-full ${className}`}>
-      <div className="p-4 border-b border-gray-200">
+    <aside className={`w-64 bg-card border-r border-border shadow-sm flex flex-col h-full ${className}`}>
+      <div className="p-4 border-b border-border">
         <Button
           onClick={onNewPromptClick}
-          className="w-full bg-primary hover:bg-blue-600 text-white"
+          className="w-full"
+          id="new-prompt-btn"
         >
           <FilePlus className="mr-2 h-4 w-4" />
           New Prompt
@@ -52,7 +53,7 @@ export default function Sidebar({ onNewPromptClick, className = "" }: SidebarPro
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-6">
           <div>
-            <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
               Recent Prompts
             </h2>
             {isLoading ? (
@@ -62,38 +63,42 @@ export default function Sidebar({ onNewPromptClick, className = "" }: SidebarPro
                 <Skeleton className="h-8 w-full" />
               </div>
             ) : prompts && prompts.length > 0 ? (
-              <ul className="space-y-1">
+              <ul className="space-y-1 animate-fade-in">
                 {prompts.map((prompt) => (
                   <li key={prompt.id}>
                     <Link 
                       href={`/designer/${prompt.id}`}
                       className={`
-                        text-gray-700 hover:bg-gray-100 hover:text-gray-900 group 
-                        rounded-md px-2 py-2 flex items-center text-sm
-                        ${location === `/designer/${prompt.id}` ? 'bg-gray-100 text-gray-900' : ''}
+                        text-foreground hover:bg-muted hover:text-foreground 
+                        rounded-md px-2 py-2 flex items-center text-sm transition-colors
+                        ${location === `/designer/${prompt.id}` ? 'bg-muted font-medium' : ''}
                       `}
                     >
-                      <FileText className="mr-3 h-4 w-4 text-gray-500" />
+                      <FileText className="mr-3 h-4 w-4 text-muted-foreground" />
                       <span className="truncate">{prompt.name}</span>
                     </Link>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-gray-500 py-2">No prompts found</p>
+              <p className="text-sm text-muted-foreground py-2">No prompts found</p>
             )}
           </div>
           
           {categories.length > 0 && (
             <div>
-              <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+              <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
                 Categories
               </h2>
               <ul className="space-y-1">
                 {categories.map((category: string, index: number) => (
                   <li key={index}>
-                    <a href="#" className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 group rounded-md px-2 py-2 flex items-center text-sm">
-                      <FolderOpen className="mr-3 h-4 w-4 text-gray-500" />
+                    <a 
+                      href="#" 
+                      className="text-foreground hover:bg-muted hover:text-foreground
+                      rounded-md px-2 py-2 flex items-center text-sm transition-colors"
+                    >
+                      <FolderOpen className="mr-3 h-4 w-4 text-muted-foreground" />
                       <span className="truncate">{category}</span>
                     </a>
                   </li>
@@ -103,8 +108,8 @@ export default function Sidebar({ onNewPromptClick, className = "" }: SidebarPro
           )}
         </div>
       </ScrollArea>
-      <div className="p-4 border-t border-gray-200">
-        <Button variant="ghost" className="w-full justify-start">
+      <div className="p-4 border-t border-border">
+        <Button variant="outline" className="w-full justify-start">
           <Settings className="mr-2 h-4 w-4" />
           Settings
         </Button>
