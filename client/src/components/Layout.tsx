@@ -20,7 +20,7 @@ export default function Layout({ children }: LayoutProps) {
   };
 
   return (
-    <div className="bg-background h-screen flex flex-col font-arabic">
+    <div className="bg-background h-screen flex flex-col">
       {/* Header */}
       <TooltipProvider>
         <header className="bg-card border-b border-border">
@@ -36,7 +36,7 @@ export default function Layout({ children }: LayoutProps) {
               </Button>
               <div className="flex items-center space-x-2">
                 <Sparkles className="h-8 w-8 text-primary" />
-                <h1 className="text-xl font-bold gradient-heading">مصمم الـ Prompts</h1>
+                <h1 className="text-xl font-bold gradient-heading">Visual Prompt Designer</h1>
               </div>
             </div>
 
@@ -50,7 +50,7 @@ export default function Layout({ children }: LayoutProps) {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>عرض على GitHub</p>
+                  <p>View on GitHub</p>
                 </TooltipContent>
               </Tooltip>
               
@@ -63,7 +63,7 @@ export default function Layout({ children }: LayoutProps) {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>مساعدة</p>
+                  <p>Help</p>
                 </TooltipContent>
               </Tooltip>
               
