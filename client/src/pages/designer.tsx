@@ -48,9 +48,11 @@ export default function Designer() {
     onPaneClick,
     updateNodeData,
     onDragOver,
+    onDragLeave,
     onDrop,
     onDragStart,
     reactFlowWrapper,
+    isDragging,
     undo,
     redo,
     run,
@@ -177,6 +179,7 @@ export default function Designer() {
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
               onDragOver={onDragOver}
+              onDragLeave={onDragLeave}
               onDrop={onDrop}
               fitView
               defaultEdgeOptions={{ 
@@ -208,7 +211,7 @@ export default function Designer() {
         {/* Properties Panel */}
         <div className="w-80 bg-card border-l border-border overflow-y-auto p-4">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-foreground">Node Properties</h3>
+            <h3 className="text-sm font-semibold text-foreground">خصائص العقدة</h3>
             {selectedNode && (
               <div className="px-2 py-1 bg-muted/60 rounded-md text-xs text-muted-foreground">
                 {selectedNode.type}
@@ -226,7 +229,7 @@ export default function Designer() {
                 <svg className="w-12 h-12 mx-auto mb-2 text-muted-foreground/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
-                <p className="text-sm">Select a node to view and edit its properties</p>
+                <p className="text-sm">اختر عقدة لعرض وتعديل خصائصها</p>
               </div>
             </div>
           )}

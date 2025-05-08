@@ -105,50 +105,117 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     }
   }, [selectedNode, saveToHistory]);
 
+  // State to track drag operation
+  const [isDragging, setIsDragging] = useState(false);
+  
   // Handle drag and drop from palette
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
+    
+    // Add visual indication
+    const designerArea = document.querySelector('.designer-grid');
+    if (designerArea && !designerArea.classList.contains('drag-over')) {
+      designerArea.classList.add('drag-over');
+    }
+  }, []);
+  
+  // Handle drag leaving the drop area
+  const onDragLeave = useCallback((event: React.DragEvent) => {
+    const designerArea = document.querySelector('.designer-grid');
+    if (designerArea) {
+      designerArea.classList.remove('drag-over');
+    }
   }, []);
 
   const onDrop = useCallback(
     (event: React.DragEvent) => {
       event.preventDefault();
-
-      if (!reactFlowWrapper.current || !reactFlowInstance) return;
-
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const type = event.dataTransfer.getData('application/reactflow/type') as keyof typeof NodeType;
-      const nodeName = event.dataTransfer.getData('application/reactflow/name');
-      const description = event.dataTransfer.getData('application/reactflow/description');
+      setIsDragging(false);
       
-      // Check if the dropped element is valid
-      if (!type || !Object.values(NodeType).includes(type as any)) return;
+      // Remove visual indication
+      const designerArea = document.querySelector('.designer-grid');
+      if (designerArea) {
+        designerArea.classList.remove('drag-over');
+      }
 
-      const position = reactFlowInstance.screenToFlowPosition({
-        x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top,
-      });
+      try {
+        if (!reactFlowWrapper.current || !reactFlowInstance) {
+          console.warn("عملية السحب فشلت - منطقة التصميم غير متوفرة");
+          return;
+        }
 
-      const newNode: Node = {
-        id: nanoid(),
-        type,
-        position,
-        data: { label: nodeName, description },
-      };
+        const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+        const type = event.dataTransfer.getData('application/reactflow/type') as keyof typeof NodeType;
+        const nodeName = event.dataTransfer.getData('application/reactflow/name');
+        const description = event.dataTransfer.getData('application/reactflow/description');
+        
+        // Check if the dropped element is valid
+        if (!type || !Object.values(NodeType).includes(type as any)) {
+          console.warn("نوع العقدة غير صالح:", type);
+          return;
+        }
 
-      saveToHistory();
-      setNodes((nds) => [...nds, newNode]);
+        const position = reactFlowInstance.screenToFlowPosition({
+          x: event.clientX - reactFlowBounds.left,
+          y: event.clientY - reactFlowBounds.top,
+        });
+
+        const newNode: Node = {
+          id: nanoid(),
+          type,
+          position,
+          data: { 
+            label: nodeName, 
+            description,
+            parameters: {},  // Initialize empty parameters object
+          },
+        };
+
+        saveToHistory();
+        setNodes((nds) => [...nds, newNode]);
+        
+        // Select the new node right away for better UX
+        setSelectedNode(newNode);
+        
+        return newNode;
+      } catch (error) {
+        console.error("خطأ أثناء إنشاء العقدة:", error);
+        return null;
+      }
     },
     [reactFlowInstance, saveToHistory]
   );
 
   // Initialize drag from palette
   const onDragStart = useCallback((event: React.DragEvent, nodeType: string, nodeName: string, description: string) => {
+    setIsDragging(true);
+    
+    // Add a visual effect to the dragging element
+    if (event.currentTarget instanceof HTMLElement) {
+      event.currentTarget.classList.add('dragging');
+    }
+    
     event.dataTransfer.setData('application/reactflow/type', nodeType);
     event.dataTransfer.setData('application/reactflow/name', nodeName);
     event.dataTransfer.setData('application/reactflow/description', description);
     event.dataTransfer.effectAllowed = 'move';
+    
+    // Create a custom drag image (optional enhancement)
+    const dragImage = document.createElement('div');
+    dragImage.textContent = nodeName;
+    dragImage.className = 'p-2 bg-primary text-white rounded text-sm';
+    dragImage.style.position = 'absolute';
+    dragImage.style.top = '-1000px';
+    document.body.appendChild(dragImage);
+    
+    event.dataTransfer.setDragImage(dragImage, 0, 0);
+    
+    // Clean up the drag image element after the drag operation
+    setTimeout(() => {
+      document.body.removeChild(dragImage);
+    }, 0);
+    
   }, []);
 
   // Undo/Redo functionality
@@ -206,9 +273,11 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     onPaneClick,
     updateNodeData,
     onDragOver,
+    onDragLeave,
     onDrop,
     onDragStart,
     reactFlowWrapper,
+    isDragging,
     undo,
     redo,
     run,

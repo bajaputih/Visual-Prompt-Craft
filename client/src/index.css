@@ -195,7 +195,7 @@
     box-shadow: 0 0 0 0 rgba(var(--primary), 0.4);
   }
   70% {
-    box-shadow: 0 0 0 5px rgba(var(--primary), 0);
+    box-shadow: 0 0 0 10px rgba(var(--primary), 0);
   }
   100% {
     box-shadow: 0 0 0 0 rgba(var(--primary), 0);
@@ -204,6 +204,28 @@
 
 .reactflow__node.drag-over {
   animation: pulse 1.5s infinite;
+}
+
+/* Styles for drag and drop operations */
+.designer-grid.drag-over {
+  background-color: hsla(var(--primary)/0.05);
+  box-shadow: inset 0 0 0 2px hsla(var(--primary)/0.5);
+  transition: all 0.3s ease;
+}
+
+.dragging {
+  opacity: 0.6;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Enhance visual feedback for node palette items */
+.node-palette-item {
+  @apply bg-card rounded-md p-3 border border-border cursor-grab transition-all hover:shadow-md hover:border-primary/40;
+}
+
+.node-palette-item:active {
+  @apply cursor-grabbing scale-95;
 }
 
 /* Improved React Flow Controls */
