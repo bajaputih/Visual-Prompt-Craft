@@ -141,7 +141,7 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
 
       try {
         if (!reactFlowWrapper.current || !reactFlowInstance) {
-          console.warn("عملية السحب فشلت - منطقة التصميم غير متوفرة");
+          console.warn("Drag operation failed - design area not available");
           return;
         }
 
@@ -152,7 +152,7 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
         
         // Check if the dropped element is valid
         if (!type || !Object.values(NodeType).includes(type as any)) {
-          console.warn("نوع العقدة غير صالح:", type);
+          console.warn("Invalid node type:", type);
           return;
         }
 
@@ -180,7 +180,7 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
         
         return newNode;
       } catch (error) {
-        console.error("خطأ أثناء إنشاء العقدة:", error);
+        console.error("Error while creating node:", error);
         return null;
       }
     },

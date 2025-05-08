@@ -165,7 +165,7 @@ export default function Designer() {
         <div 
           className="flex-1 relative bg-muted/30 designer-grid h-full w-full" 
           ref={reactFlowWrapper}
-          style={{ minHeight: '500px' }}
+          style={{ height: 'calc(100vh - 160px)', minHeight: '500px', width: '100%' }}
         >
           <div className="absolute inset-0">
             <ReactFlow
