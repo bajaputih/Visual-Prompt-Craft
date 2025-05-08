@@ -6,6 +6,7 @@ import {
   type InsertPrompt
 } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
+import { executePrompt, importConversation } from "./services/openai.service";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get all prompts
@@ -125,6 +126,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to fetch prompts by category" });
     }
   });
+
+  // OpenAI integration - Execute a prompt with AI
+  app.post("/api/execute-prompt", executePrompt);
+  
+  // Import conversation from ChatGPT/Claude
+  app.post("/api/import-conversation", importConversation);
 
   const httpServer = createServer(app);
   return httpServer;

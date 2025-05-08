@@ -1,0 +1,47 @@
+ooking for cart with sessionId: fa11ea97...
+[Server] GET /api/store-settings/theme 200 in 3ms :: {"address":"العراق/أربيل","logoUrl"…
+Found cart: ID 2 for session fa11ea97...
+Cart 2 has 0 items
+getCartBySessionId result structure: {
+  "cart": {
+    "id": 2,
+    "sessionId": "fa11ea97..."
+  },
+  "itemsCount": 0
+}
+[GET /api/cart] Found existing cart: ID 2 with 0 items
+[GET /api/cart] Full cart data: {
+  "cart": {
+    "id": 2,
+    "sessionId": "fa11ea97-6aed-4b79-8d8f-42f69a3b1f9b",
+    "userId": null,
+    "createdAt": "2025-04-29T18:31:08.836Z",
+    "updatedAt": "2025-04-29T18:31:08.836Z"
+  },
+  "items": []
+}
+[GET /api/cart] Response Headers: [Object: null prototype] {
+  'x-powered-by': 'Express',
+  'x-session-id': 'fa11ea97-6aed-4b79-8d8f-42f69a3b1f9b',
+  'access-control-expose-headers': 'X-Session-Id'
+}
+[GET /api/cart] Response structure: {
+  "cartId": 2,
+  "sessionId": "fa11ea97...",
+  "itemsCount": 0,
+  "itemIds": []
+}
+[Server] GET /api/cart 200 in 5ms :: {"cart":{"id":2,"sessionId":"fa11ea97-6aed-4b79-8d8…
+[Server] GET /api/dashboard/recent-orders 200 in 4ms :: [{"id":5,"customerName":"Muhamma…
+[Server] GET /api/dashboard/stats 200 in 8ms :: {"totalSales":29780,"totalOrders":5,"low…
+[Server] GET /api/orders 200 in 1ms :: [{"id":5,"customerName":"Muhammad Saddam Huson al…
+[Server] GET /api/orders/4 200 in 6ms :: {"order":{"id":4,"customerName":"سشيسشي","custo…
+[Server] GET /api/orders/5 200 in 8ms :: {"order":{"id":5,"customerName":"Muhammad Sadda…
+[Server] GET /api/orders/2 200 in 9ms :: {"order":{"id":2,"customerName":"شسييييييي","cu…
+[Server] GET /api/orders/3 200 in 9ms :: {"order":{"id":3,"customerName":"MOHAMMED HASSO…
+[Server] GET /api/orders/1 200 in 152ms :: {"order":{"id":1,"customerName":"Muhammad Sad…
+[Server] GET /api/orders/5 304 in 3ms :: {"order":{"id":5,"customerName":"Muhammad Sadda…
+[Server] GET /api/orders/2 304 in 2ms :: {"order":{"id":2,"customerName":"شسييييييي","cu…
+[Server] DELETE /api/orders/2 404 in 1ms
+[Server] DELETE /api/orders/2 404 in 0ms
+[Server] DELETE /api/orders/2 404 in 0ms
