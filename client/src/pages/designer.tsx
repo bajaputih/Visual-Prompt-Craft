@@ -161,7 +161,7 @@ export default function Designer() {
         
         {/* Flow Canvas */}
         <div 
-          className="flex-1 relative bg-gray-50" 
+          className="flex-1 relative bg-muted/30 designer-grid" 
           ref={reactFlowWrapper}
         >
           <ReactFlow
@@ -177,19 +177,50 @@ export default function Designer() {
             onDragOver={onDragOver}
             onDrop={onDrop}
             fitView
+            defaultEdgeOptions={{ 
+              animated: true,
+              style: { stroke: 'hsl(var(--primary))', strokeWidth: 2 } 
+            }}
+            proOptions={{ hideAttribution: true }}
           >
-            <Background />
-            <Controls />
+            <Background gap={20} color="rgba(0, 0, 0, 0.03)" />
+            <Controls 
+              position="bottom-right"
+              style={{ 
+                background: 'hsl(var(--card))', 
+                borderColor: 'hsl(var(--border))',
+                borderRadius: 'var(--radius)',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
+              }}
+            />
           </ReactFlow>
         </div>
         
         {/* Properties Panel */}
-        <div className="w-64 bg-white border-l border-gray-200 overflow-y-auto p-4">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3">Node Properties</h3>
-          <NodeProperties 
-            selectedNode={selectedNode} 
-            onNodeUpdate={updateNodeData} 
-          />
+        <div className="w-80 bg-card border-l border-border overflow-y-auto p-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Node Properties</h3>
+            {selectedNode && (
+              <div className="px-2 py-1 bg-muted/60 rounded-md text-xs text-muted-foreground">
+                {selectedNode.type}
+              </div>
+            )}
+          </div>
+          {selectedNode ? (
+            <NodeProperties 
+              selectedNode={selectedNode} 
+              onNodeUpdate={updateNodeData} 
+            />
+          ) : (
+            <div className="text-center p-6 border border-dashed border-border rounded-lg bg-muted/30">
+              <div className="mb-2 text-muted-foreground">
+                <svg className="w-12 h-12 mx-auto mb-2 text-muted-foreground/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                <p className="text-sm">Select a node to view and edit its properties</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
