@@ -89,12 +89,18 @@ export default function PromptRunner({ isOpen, onClose, elements }: PromptRunner
   
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+      <DialogContent 
+        className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto"
+        aria-describedby="prompt-runner-description"
+      >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <PlayCircle className="h-5 w-5" />
             Run Prompt
           </DialogTitle>
+          <p id="prompt-runner-description" className="text-sm text-muted-foreground mt-2">
+            Execute your prompt with the specified variables and view the AI-generated response.
+          </p>
         </DialogHeader>
         
         {inputVariables.length > 0 && (

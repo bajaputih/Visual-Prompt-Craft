@@ -87,10 +87,13 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[900px] max-h-[90vh]">
+      <DialogContent 
+        className="sm:max-w-[900px] max-h-[90vh]"
+        aria-describedby="template-gallery-description"
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">Template Gallery</DialogTitle>
-          <DialogDescription>
+          <DialogDescription id="template-gallery-description">
             Choose from our pre-built templates to quickly design effective prompts
           </DialogDescription>
         </DialogHeader>
