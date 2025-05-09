@@ -5,7 +5,7 @@ import {
   ContextMenuItem,
   ContextMenuSeparator, 
 } from "@/components/ui/context-menu";
-import { Lock, Unlock, ChevronUp, ChevronDown, Copy, Trash } from "lucide-react";
+import { Lock, Unlock, ChevronUp, ChevronDown, Copy, Trash, Pencil } from "lucide-react";
 
 interface NodeContextMenuProps {
   nodeId: string;
@@ -35,13 +35,13 @@ export default function NodeContextMenu({
       <ContextMenuTrigger asChild>
         {children}
       </ContextMenuTrigger>
-      <ContextMenuContent className="w-48">
+      <ContextMenuContent className="w-56">
         <ContextMenuItem 
           onClick={() => onEdit(nodeId)} 
           disabled={isLocked}
           className="flex items-center gap-2"
         >
-          <span className="text-muted-foreground">📝</span> Edit Node
+          <Pencil className="h-4 w-4 text-muted-foreground" /> Edit Node
         </ContextMenuItem>
         
         <ContextMenuItem 
