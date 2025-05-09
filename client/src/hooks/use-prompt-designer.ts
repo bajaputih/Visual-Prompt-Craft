@@ -164,18 +164,26 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
     
-    // Add visual indication
-    const designerArea = document.querySelector('.designer-grid');
-    if (designerArea && !designerArea.classList.contains('drag-over')) {
-      designerArea.classList.add('drag-over');
+    // Add visual indication - safely add the class
+    try {
+      const designerArea = document.querySelector('.designer-grid');
+      if (designerArea && designerArea instanceof HTMLElement && !designerArea.classList.contains('drag-over')) {
+        designerArea.classList.add('drag-over');
+      }
+    } catch (err) {
+      console.error('Error during drag over:', err);
     }
   }, []);
   
-  // Handle drag leaving the drop area
+  // Handle drag leaving the drop area - safely remove the class
   const onDragLeave = useCallback((event: React.DragEvent) => {
-    const designerArea = document.querySelector('.designer-grid');
-    if (designerArea) {
-      designerArea.classList.remove('drag-over');
+    try {
+      const designerArea = document.querySelector('.designer-grid');
+      if (designerArea && designerArea instanceof HTMLElement && designerArea.classList) {
+        designerArea.classList.remove('drag-over');
+      }
+    } catch (err) {
+      console.error('Error during drag leave:', err);
     }
   }, []);
 
@@ -184,10 +192,14 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
       event.preventDefault();
       setIsDragging(false);
       
-      // Remove visual indication
-      const designerArea = document.querySelector('.designer-grid');
-      if (designerArea) {
-        designerArea.classList.remove('drag-over');
+      // Remove visual indication - safely
+      try {
+        const designerArea = document.querySelector('.designer-grid');
+        if (designerArea && designerArea instanceof HTMLElement && designerArea.classList) {
+          designerArea.classList.remove('drag-over');
+        }
+      } catch (err) {
+        console.error('Error removing drag-over class:', err);
       }
 
       try {
@@ -242,31 +254,46 @@ export function usePromptDesigner({ initialElements }: UsePromptDesignerProps = 
   const onDragStart = useCallback((event: React.DragEvent, nodeType: string, nodeName: string, description: string) => {
     setIsDragging(true);
     
-    // Add a visual effect to the dragging element
-    if (event.currentTarget instanceof HTMLElement) {
-      event.currentTarget.classList.add('dragging');
+    // Add a visual effect to the dragging element - safely
+    try {
+      const dragElement = event.currentTarget;
+      if (dragElement && dragElement instanceof HTMLElement) {
+        dragElement.classList.add('dragging');
+      }
+    } catch (err) {
+      console.error('Error adding dragging class:', err);
     }
     
+    // Set the required data for the drag operation
     event.dataTransfer.setData('application/reactflow/type', nodeType);
     event.dataTransfer.setData('application/reactflow/name', nodeName);
     event.dataTransfer.setData('application/reactflow/description', description);
     event.dataTransfer.effectAllowed = 'move';
     
-    // Create a custom drag image (optional enhancement)
-    const dragImage = document.createElement('div');
-    dragImage.textContent = nodeName;
-    dragImage.className = 'p-2 bg-primary text-white rounded text-sm';
-    dragImage.style.position = 'absolute';
-    dragImage.style.top = '-1000px';
-    document.body.appendChild(dragImage);
-    
-    event.dataTransfer.setDragImage(dragImage, 0, 0);
-    
-    // Clean up the drag image element after the drag operation
-    setTimeout(() => {
-      document.body.removeChild(dragImage);
-    }, 0);
-    
+    try {
+      // Create a custom drag image
+      const dragImage = document.createElement('div');
+      dragImage.textContent = nodeName;
+      dragImage.className = 'p-2 bg-primary text-white rounded text-sm';
+      dragImage.style.position = 'absolute';
+      dragImage.style.top = '-1000px';
+      document.body.appendChild(dragImage);
+      
+      // Set the drag image if supported
+      event.dataTransfer.setDragImage(dragImage, 0, 0);
+      
+      // Clean up the drag image element after the drag operation
+      setTimeout(() => {
+        try {
+          document.body.removeChild(dragImage);
+        } catch (err) {
+          console.error('Error removing drag image:', err);
+        }
+      }, 0);
+    } catch (err) {
+      console.error('Error creating drag image:', err);
+      // Continue without custom drag image
+    }
   }, []);
 
   // Undo/Redo functionality

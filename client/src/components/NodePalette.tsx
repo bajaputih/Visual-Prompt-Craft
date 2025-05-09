@@ -10,17 +10,37 @@ export default function NodePalette({ onDragStart }: NodePaletteProps) {
     (event: React.DragEvent, nodeType: string, nodeName: string, description: string) => {
       onDragStart(event, nodeType, nodeName, description);
       
-      // Add dragging class to the dragged element
-      if (event.currentTarget instanceof HTMLElement) {
-        event.currentTarget.classList.add('dragging');
-        
-        // Remove class after drag operation ends
-        const handleDragEnd = () => {
-          event.currentTarget.classList.remove('dragging');
-          event.currentTarget.removeEventListener('dragend', handleDragEnd);
-        };
-        
-        event.currentTarget.addEventListener('dragend', handleDragEnd);
+      // Safely add dragging class to the dragged element
+      const element = event.currentTarget as HTMLElement;
+      try {
+        if (element && element instanceof HTMLElement) {
+          // Store reference to avoid closure issues
+          const draggedElement = element;
+          draggedElement.classList.add('dragging');
+          
+          // Remove class after drag operation ends with safe closure
+          const handleDragEnd = () => {
+            try {
+              if (draggedElement && draggedElement.classList) {
+                draggedElement.classList.remove('dragging');
+              }
+            } catch (err) {
+              console.error('Error removing dragging class:', err);
+            }
+            
+            // Safely remove event listener
+            try {
+              draggedElement.removeEventListener('dragend', handleDragEnd);
+            } catch (err) {
+              console.error('Error removing event listener:', err);
+            }
+          };
+          
+          // Add the event listener
+          draggedElement.addEventListener('dragend', handleDragEnd);
+        }
+      } catch (err) {
+        console.error('Error in drag start handler:', err);
       }
     },
     [onDragStart]
