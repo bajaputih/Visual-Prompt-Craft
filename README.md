@@ -5,6 +5,7 @@
 ![GitHub license](https://img.shields.io/github/license/hamodywe/Visual-Prompt-Craft)
 [![Twitter Follow](https://img.shields.io/twitter/follow/hamodywe?style=social)](https://twitter.com/hamodywe)
 
+
 > Design. Iterate. Perfect. A powerful visual tool for crafting AI prompts.
 
 **Keywords**: AI prompt engineering, visual prompt designer, flow-based prompt, LLM prompting, prompt chains, prompt templates, ChatGPT prompts, prompt optimization, AI workflow, prompt crafting
@@ -20,6 +21,7 @@
 Create sophisticated prompt chains by connecting different types of nodes, manage prompt parameters, and generate high-quality AI results without writing complex prompt templates manually.
 
 ### 🚀 Demo
+![Studio photo](assets/2.png)
 
 Try the live demo: [Visual Prompt Craft](https://visual-prompt-craft.vercel.app)
 
@@ -133,8 +135,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 - **GitHub**: [@hamodywe](https://github.com/hamodywe)
-- **Twitter**: [@hamodywe](https://twitter.com/hamodywe)
-- **Email**: [contact@hamodywe.com](mailto:contact@hamodywe.com)
+- **Email**: [contact@hamodywe.com](mailto:ios9.apk@gmail.com)
 
 ---
 
