@@ -8,7 +8,6 @@
 
 > Design. Iterate. Perfect. A powerful visual tool for crafting AI prompts.
 
-**Keywords**: AI prompt engineering, visual prompt designer, flow-based prompt, LLM prompting, prompt chains, prompt templates, ChatGPT prompts, prompt optimization, AI workflow, prompt crafting
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/hamodywe/Visual-Prompt-Craft/main/generated-icon.png" alt="Visual Prompt Craft Logo" width="200">
@@ -135,7 +134,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 - **GitHub**: [@hamodywe](https://github.com/hamodywe)
-- **Email**: [contact@hamodywe.com](mailto:ios9.apk@gmail.com)
+- **Email**: ios9.apk@gmail.com
 
 ---
 
