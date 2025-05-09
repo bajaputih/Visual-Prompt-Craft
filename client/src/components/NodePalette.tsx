@@ -39,6 +39,8 @@ export default function NodePalette({ onDragStart }: NodePaletteProps) {
           onDragStart={(e) => 
             handleDragStart(e, NodeType.INPUT, "User Input", "Initial user prompt")
           }
+          style={{ cursor: 'grab' }}
+          title="Drag this component to the canvas to add user input"
         >
           <div className="flex items-center gap-2 mb-1">
             <div className="h-2.5 w-2.5 rounded-full bg-primary"></div>
@@ -53,6 +55,8 @@ export default function NodePalette({ onDragStart }: NodePaletteProps) {
           onDragStart={(e) => 
             handleDragStart(e, NodeType.PROCESS, "Process", "Transform or modify text")
           }
+          style={{ cursor: 'grab' }}
+          title="Drag this component to the canvas to add processing logic"
         >
           <div className="flex items-center gap-2 mb-1">
             <div className="h-2.5 w-2.5 rounded-full bg-success"></div>
@@ -67,6 +71,8 @@ export default function NodePalette({ onDragStart }: NodePaletteProps) {
           onDragStart={(e) => 
             handleDragStart(e, NodeType.FILTER, "Filter", "Remove unwanted content")
           }
+          style={{ cursor: 'grab' }}
+          title="Drag this component to the canvas to add content filtering"
         >
           <div className="flex items-center gap-2 mb-1">
             <div className="h-2.5 w-2.5 rounded-full bg-warning"></div>
@@ -81,6 +87,8 @@ export default function NodePalette({ onDragStart }: NodePaletteProps) {
           onDragStart={(e) => 
             handleDragStart(e, NodeType.CONDITION, "Condition", "Branch based on content")
           }
+          style={{ cursor: 'grab' }}
+          title="Drag this component to the canvas to add conditional branching"
         >
           <div className="flex items-center gap-2 mb-1">
             <div className="h-2.5 w-2.5 rounded-full bg-info"></div>
@@ -95,6 +103,8 @@ export default function NodePalette({ onDragStart }: NodePaletteProps) {
           onDragStart={(e) => 
             handleDragStart(e, NodeType.OUTPUT, "Output", "Final response")
           }
+          style={{ cursor: 'grab' }}
+          title="Drag this component to the canvas to add final output"
         >
           <div className="flex items-center gap-2 mb-1">
             <div className="h-2.5 w-2.5 rounded-full bg-accent"></div>

@@ -41,6 +41,9 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
   const templatesByCategory = getTemplatesByCategory();
   const categories = Object.keys(templatesByCategory);
   
+  // Fix for React Fragment warning
+  const fixFragmentWarning = () => {};
+  
   // Filter templates based on search query
   const filterTemplates = (templates: any[]) => {
     if (!searchQuery.trim()) return templates;
@@ -118,7 +121,7 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
             <ScrollArea className="h-[500px] pr-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-2">
                 {Object.entries(templatesByCategory).map(([category, templates]) => (
-                  <React.Fragment key={category}>
+                  <div key={category}>
                     {filterTemplates(templates).length > 0 && (
                       <>
                         <h3 className="text-lg font-semibold col-span-full mt-2 mb-1">{category}</h3>
@@ -146,7 +149,7 @@ export default function TemplateGallery({ isOpen, onClose, onSelectTemplate }: T
                         ))}
                       </>
                     )}
-                  </React.Fragment>
+                  </div>
                 ))}
               </div>
             </ScrollArea>
