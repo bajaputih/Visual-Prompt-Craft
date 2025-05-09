@@ -1,65 +1,58 @@
-/**
- * Professional prompt templates for different user roles
- */
 import { FlowElements, NodeType } from "@shared/schema";
 
-// ===== Data Analysis Templates =====
-
-// SQL Query Generator
+// SQL Query Generator Template
 export const sqlQueryGenerator: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "Business Question",
-        description: "What question do you want to answer with data?"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "Database Schema", 
+        description: "Tables and their relationships" 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Database Schema",
-        description: "Describe your tables and relationships"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Query Requirement", 
+        description: "What data needs to be retrieved" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 100 },
-      data: {
-        label: "SQL Generation",
-        description: "Generate SQL query",
-        parameters: {
-          dialect: "PostgreSQL",
-          complexity: "medium"
-        },
-        template: "Based on the following business question and database schema, generate a {{dialect}} SQL query with {{complexity}} complexity level. Include comments explaining the query logic.\n\nBusiness Question: {{Business Question}}\n\nDatabase Schema:\n{{Database Schema}}"
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 175 },
+      data: { 
+        label: "Table Analysis", 
+        description: "Identify required tables",
+        parameters: {},
+        template: "Analyze the database schema and determine which tables and columns are needed to fulfill the query requirement.\n\nDatabase Schema:\n{{Database Schema}}\n\nQuery Requirement:\n{{Query Requirement}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 250 },
-      data: {
-        label: "Query Explanation",
-        description: "Explain query logic",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Query Construction", 
+        description: "Build SQL query",
         parameters: {
-          detail_level: "high"
+          dialect: "PostgreSQL",
+          include_explanation: "yes"
         },
-        template: "Explain the following SQL query in {{detail_level === 'high' ? 'detail' : 'brief'}}. Include why certain joins, filters, and aggregations were chosen.\n\nSQL Query:\n```sql\n{{SQL Generation}}\n```"
+        template: "Based on the table analysis, construct a {{dialect}} SQL query that retrieves the required data. {{include_explanation === 'yes' ? 'Include a detailed explanation of the query.\\'s logic and any optimizations made.' : ''}}\n\nTable Analysis:\n{{Table Analysis}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "Final Query",
-        description: "SQL query with explanation"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "Final SQL Query", 
+        description: "Optimized SQL query with explanation" 
       }
     }
   ],
@@ -71,61 +64,61 @@ export const sqlQueryGenerator: FlowElements = {
   ]
 };
 
-// Data Visualization Recommendation
+// Data Visualization Template
 export const dataVisualization: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "Dataset Description", 
-        description: "Describe your dataset (columns, types, etc.)"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "Data Description", 
+        description: "Dataset structure and variables" 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Analysis Goal",
-        description: "What insights are you looking for?"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Visualization Goal", 
+        description: "What insights to highlight" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
+      type: NodeType.PROCESS,
       position: { x: 350, y: 175 },
-      data: {
-        label: "Visualization Planning",
-        description: "Recommend visualization types",
+      data: { 
+        label: "Chart Selection", 
+        description: "Determine appropriate chart types",
         parameters: {
-          audience: "technical",
-          tool: "tableau"
+          chart_library: "D3.js"
         },
-        template: "Based on the following dataset and analysis goals, recommend the most appropriate visualization types. Consider that the audience is {{audience}} and the tool being used is {{tool}}.\n\nDataset Description:\n{{Dataset Description}}\n\nAnalysis Goal:\n{{Analysis Goal}}"
+        template: "Based on the data description and visualization goals, recommend the most appropriate chart types to visualize the data effectively using {{chart_library}}.\n\nData Description:\n{{Data Description}}\n\nVisualization Goal:\n{{Visualization Goal}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "Implementation Guide",
-        description: "Step-by-step implementation",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Chart Configuration", 
+        description: "Configure chart parameters",
         parameters: {
-          detail: "high"
+          color_scheme: "viridis",
+          responsive: "true"
         },
-        template: "Provide a {{detail === 'high' ? 'detailed' : 'brief'}} implementation guide for creating the recommended visualizations in {{tool}}. Include specific settings, calculated fields if needed, and best practices.\n\nVisualization Recommendations:\n{{Visualization Planning}}"
+        template: "For each recommended chart type, provide detailed configuration including axes, legends, labels, {{color_scheme}} color scheme, and {{responsive === 'true' ? 'responsive design considerations' : 'fixed dimensions'}}.\n\nChart Types:\n{{Chart Selection}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 850, y: 175 },
-      data: {
-        label: "Visualization Plan",
-        description: "Complete visualization blueprint"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "Visualization Guide", 
+        description: "Complete visualization instructions" 
       }
     }
   ],
@@ -137,61 +130,61 @@ export const dataVisualization: FlowElements = {
   ]
 };
 
-// Statistical Analysis Helper
+// Statistical Analysis Template
 export const statisticalAnalysis: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "Data Summary",
-        description: "Describe your dataset and variables"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "Data Description", 
+        description: "Dataset structure and variables" 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Analysis Objective",
-        description: "What do you want to test or analyze?"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Analysis Objective", 
+        description: "Research question to answer" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 100 },
-      data: {
-        label: "Statistical Method Selection",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 175 },
+      data: { 
+        label: "Statistical Method Selection", 
         description: "Choose appropriate methods",
         parameters: {
-          significance: "0.05"
+          significance_level: "0.05"
         },
-        template: "Based on the data and objective described, recommend the most appropriate statistical analysis methods with significance level of {{significance}}. Justify your recommendations.\n\nData Summary:\n{{Data Summary}}\n\nAnalysis Objective:\n{{Analysis Objective}}"
+        template: "Based on the data description and analysis objective, recommend appropriate statistical methods with a significance level of {{significance_level}}.\n\nData Description:\n{{Data Description}}\n\nAnalysis Objective:\n{{Analysis Objective}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 250 },
-      data: {
-        label: "Implementation Code",
-        description: "Generate code for the analysis",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Analysis Procedure", 
+        description: "Step-by-step analysis plan",
         parameters: {
-          language: "python",
-          libraries: "scipy, statsmodels"
+          software: "R",
+          include_code: "yes"
         },
-        template: "Generate {{language}} code using {{libraries}} to implement the recommended statistical methods. Include data preparation, analysis execution, and result interpretation.\n\nRecommended Methods:\n{{Statistical Method Selection}}"
+        template: "Provide a detailed analysis procedure using {{software}}. {{include_code === 'yes' ? 'Include sample code for each step.' : ''}} Cover data preparation, statistical tests, and interpretation guidelines.\n\nRecommended Methods:\n{{Statistical Method Selection}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "Statistical Analysis Plan",
-        description: "Complete statistical analysis with code"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "Statistical Analysis Plan", 
+        description: "Complete analysis protocol" 
       }
     }
   ],
@@ -203,127 +196,127 @@ export const statisticalAnalysis: FlowElements = {
   ]
 };
 
-// ===== Design Templates =====
-
-// UI Design System Creator
+// UI Design System Template
 export const uiDesignSystem: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "Brand Identity",
-        description: "Brand values, personality, and audience"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "Brand Identity", 
+        description: "Logo, colors, typography, etc." 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Design Requirements",
-        description: "Technical requirements and constraints"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Application Requirements", 
+        description: "User needs and platform details" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 100 },
-      data: {
-        label: "Design System Planning",
-        description: "Plan core elements",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 175 },
+      data: { 
+        label: "Design Tokens", 
+        description: "Core design variables",
         parameters: {
-          style: "minimalist"
+          token_format: "CSS variables"
         },
-        template: "Create a comprehensive design system plan based on the brand identity and design requirements. Follow a {{style}} aesthetic approach. Include color palette, typography, spacing system, and component principles.\n\nBrand Identity:\n{{Brand Identity}}\n\nDesign Requirements:\n{{Design Requirements}}"
+        template: "Based on the brand identity, define design tokens using {{token_format}} for colors, typography, spacing, shadows, and other fundamental design elements.\n\nBrand Identity:\n{{Brand Identity}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 250 },
-      data: {
-        label: "Component Specification",
-        description: "Define key components",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Component Library", 
+        description: "Reusable UI components",
         parameters: {
-          component_set: "comprehensive"
+          framework: "React",
+          accessibility: "WCAG 2.1 AA"
         },
-        template: "Based on the design system plan, create {{component_set === 'comprehensive' ? 'detailed' : 'basic'}} specifications for key UI components. Include buttons, inputs, cards, navigation, modals, and layout components. For each, describe visual properties, states, behavior, and usage guidelines.\n\nDesign System Plan:\n{{Design System Planning}}"
+        template: "Design a comprehensive component library for {{framework}} that adheres to {{accessibility}} accessibility standards. Include specifications for each component based on the design tokens.\n\nDesign Tokens:\n{{Design Tokens}}\n\nApplication Requirements:\n{{Application Requirements}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "Design System Documentation",
-        description: "Complete design system specifications"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "Design System Documentation", 
+        description: "Complete design system specifications" 
       }
     }
   ],
   edges: [
     { id: "e1-3", source: "1", target: "3" },
-    { id: "e2-3", source: "2", target: "3" },
+    { id: "e2-4", source: "2", target: "4" },
     { id: "e3-4", source: "3", target: "4" },
     { id: "e4-5", source: "4", target: "5" }
   ]
 };
 
-// UX Flow Designer
+// UX Flow Designer Template
 export const uxFlowDesigner: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "User Persona",
-        description: "Details about the target user"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "User Personas", 
+        description: "Target user descriptions" 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Task Description",
-        description: "What the user needs to accomplish"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Task Requirements", 
+        description: "What users need to accomplish" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 100 },
-      data: {
-        label: "User Flow Mapping",
-        description: "Map out the user journey",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 175 },
+      data: { 
+        label: "User Journey Mapping", 
+        description: "Flow of user interactions",
         parameters: {
           detail_level: "high"
         },
-        template: "Create a {{detail_level === 'high' ? 'detailed' : 'high-level'}} user flow for accomplishing the described task. Map out each step in the journey from start to completion, including decision points and possible paths.\n\nUser Persona:\n{{User Persona}}\n\nTask Description:\n{{Task Description}}"
+        template: "Create a {{detail_level === 'high' ? 'detailed' : 'simplified'}} user journey map for the primary personas completing the required tasks. Include touchpoints, user emotions, and potential pain points.\n\nUser Personas:\n{{User Personas}}\n\nTask Requirements:\n{{Task Requirements}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 250 },
-      data: {
-        label: "Screen Requirements",
-        description: "Define screens needed",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Interaction Design", 
+        description: "Screen flows and interactions",
         parameters: {
-          platform: "mobile"
+          interaction_pattern: "progressive disclosure",
+          include_microcopy: "yes"
         },
-        template: "Based on the user flow, define the screens required for a {{platform}} app. For each screen, describe its purpose, key components, user interactions, and data requirements.\n\nUser Flow:\n{{User Flow Mapping}}"
+        template: "Design the user interaction flow using {{interaction_pattern}} patterns. {{include_microcopy === 'yes' ? 'Include microcopy for key interactions.' : ''}} Detail the screen-to-screen navigation, form interactions, and feedback mechanisms.\n\nUser Journey Map:\n{{User Journey Mapping}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "UX Blueprint",
-        description: "Complete UX flow with screen specifications"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "UX Flow Documentation", 
+        description: "Complete user experience blueprint" 
       }
     }
   ],
@@ -335,64 +328,62 @@ export const uxFlowDesigner: FlowElements = {
   ]
 };
 
-// ===== Content Writing Templates =====
-
-// SEO Article Generator
+// SEO Article Generator Template
 export const seoArticleGenerator: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "Target Keyword",
-        description: "Primary keyword to rank for"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "Target Keywords", 
+        description: "Primary and secondary keywords" 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Audience",
-        description: "Target audience and their pain points"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Topic Brief", 
+        description: "Article topic and audience" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 100 },
-      data: {
-        label: "SEO Content Planning",
-        description: "Plan SEO-optimized structure",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 175 },
+      data: { 
+        label: "SEO Content Structure", 
+        description: "Outline with keyword mapping",
         parameters: {
           word_count: "1500",
-          related_keywords: "5"
+          heading_structure: "H2, H3"
         },
-        template: "Create a detailed plan for a {{word_count}}-word SEO article targeting the keyword '{{Target Keyword}}'. Include a title, meta description, introduction, {{related_keywords}} H2 headings based on related keywords, and conclusion. Consider the audience's needs and search intent.\n\nTarget Keyword: {{Target Keyword}}\n\nAudience: {{Audience}}"
+        template: "Create a SEO-optimized outline for a {{word_count}}-word article using {{heading_structure}} headings. Map primary and secondary keywords to specific sections.\n\nTarget Keywords:\n{{Target Keywords}}\n\nTopic Brief:\n{{Topic Brief}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 250 },
-      data: {
-        label: "Article Generation",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Article Generation", 
         description: "Write full SEO article",
         parameters: {
           tone: "informative",
-          expertise_level: "intermediate"
+          include_meta: "yes"
         },
-        template: "Based on the content plan, write a full SEO-optimized article with a {{tone}} tone targeted at readers with {{expertise_level}} knowledge level. Naturally incorporate the target keyword and related keywords throughout the article. Include a compelling introduction, detailed body sections with examples, and a strong conclusion with a call to action.\n\nSEO Content Plan:\n{{SEO Content Planning}}"
+        template: "Based on the outline, write a complete SEO-optimized article in an {{tone}} tone. {{include_meta === 'yes' ? 'Include meta title and description.' : ''}} Ensure natural keyword integration and readability.\n\nContent Structure:\n{{SEO Content Structure}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "SEO Article",
-        description: "Complete SEO-optimized article"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "Finished SEO Article", 
+        description: "Publication-ready article with meta tags" 
       }
     }
   ],
@@ -404,61 +395,61 @@ export const seoArticleGenerator: FlowElements = {
   ]
 };
 
-// Social Media Content Calendar
+// Social Media Content Template
 export const socialMediaContent: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "Brand Info",
-        description: "Brand identity, voice, and key messages"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "Brand Voice", 
+        description: "Brand personality and tone" 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Content Goals",
-        description: "Objectives for the content (engagement, sales, etc.)"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Content Topic", 
+        description: "Subject of social media posts" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 100 },
-      data: {
-        label: "Content Strategy",
-        description: "Plan content themes and approach",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 175 },
+      data: { 
+        label: "Platform Strategy", 
+        description: "Platform-specific approaches",
         parameters: {
-          platforms: "Instagram, LinkedIn, Twitter",
-          duration: "2 weeks"
+          platforms: "Instagram, Twitter, LinkedIn"
         },
-        template: "Create a social media content strategy for {{platforms}} over a {{duration}} period. Include content themes, posting frequency, and content mix (educational, promotional, entertaining). Align with the brand voice and content goals.\n\nBrand Info:\n{{Brand Info}}\n\nContent Goals:\n{{Content Goals}}"
+        template: "Develop a content strategy for {{platforms}} that tailors the content topic to each platform's unique characteristics and audience expectations.\n\nBrand Voice:\n{{Brand Voice}}\n\nContent Topic:\n{{Content Topic}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 250 },
-      data: {
-        label: "Content Creation",
-        description: "Generate actual content pieces",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Content Creation", 
+        description: "Generate platform-specific content",
         parameters: {
-          posts_per_platform: "4"
+          posts_per_platform: "3",
+          include_hashtags: "yes"
         },
-        template: "Based on the content strategy, create {{posts_per_platform}} posts for each platform ({{platforms}}). For each post, include the platform, content type, copy, hashtags (if applicable), and a description of visuals or attached media. Ensure each post aligns with platform best practices.\n\nContent Strategy:\n{{Content Strategy}}"
+        template: "Create {{posts_per_platform}} posts for each platform following the strategy. {{include_hashtags === 'yes' ? 'Include relevant hashtags for each platform.' : ''}} Vary post formats (questions, statements, quotes, etc.) while maintaining brand voice.\n\nPlatform Strategy:\n{{Platform Strategy}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "Content Calendar",
-        description: "Complete social media content plan"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "Social Media Package", 
+        description: "Ready-to-publish social media content" 
       }
     }
   ],
@@ -470,62 +461,62 @@ export const socialMediaContent: FlowElements = {
   ]
 };
 
-// Email Sequence Creator
+// Email Sequence Template
 export const emailSequence: FlowElements = {
   nodes: [
     {
       id: "1",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 100 },
-      data: {
-        label: "Campaign Purpose",
-        description: "Goal of the email sequence"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 175 },
+      data: { 
+        label: "Customer Journey Stage", 
+        description: "Where recipients are in journey" 
       }
     },
     {
       id: "2",
-      type: "INPUT" as keyof typeof NodeType,
-      position: { x: 100, y: 250 },
-      data: {
-        label: "Target Audience",
-        description: "Who will receive these emails?"
+      type: NodeType.INPUT,
+      position: { x: 100, y: 325 },
+      data: { 
+        label: "Campaign Goal", 
+        description: "Desired recipient action" 
       }
     },
     {
       id: "3",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 100 },
-      data: {
-        label: "Email Sequence Planning",
-        description: "Plan the email flow",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 175 },
+      data: { 
+        label: "Sequence Strategy", 
+        description: "Email sequence flow planning",
         parameters: {
-          emails: "5",
-          sequence_type: "nurture"
+          email_count: "5",
+          sequence_duration: "14 days"
         },
-        template: "Design a {{sequence_type}} email sequence with {{emails}} emails. Outline the purpose, timing, and core message of each email. Create a logical flow that guides recipients toward the campaign goal.\n\nCampaign Purpose:\n{{Campaign Purpose}}\n\nTarget Audience:\n{{Target Audience}}"
+        template: "Design an email sequence of {{email_count}} emails over {{sequence_duration}} that guides recipients from their current journey stage toward the campaign goal.\n\nCustomer Journey Stage:\n{{Customer Journey Stage}}\n\nCampaign Goal:\n{{Campaign Goal}}"
       }
     },
     {
       id: "4",
-      type: "PROCESS" as keyof typeof NodeType,
-      position: { x: 350, y: 250 },
-      data: {
-        label: "Email Content Creation",
-        description: "Write the actual emails",
+      type: NodeType.PROCESS,
+      position: { x: 350, y: 325 },
+      data: { 
+        label: "Email Content Creation", 
+        description: "Write each email in sequence",
         parameters: {
-          tone: "conversational",
-          include_subject_line: "yes"
+          subject_line_style: "curiosity-based",
+          include_personalization: "yes"
         },
-        template: "Based on the email sequence plan, write the full content for each email. Use a {{tone}} tone appropriate for the audience. {{include_subject_line === 'yes' ? 'Include compelling subject lines, ' : ''}}Write engaging content with clear calls-to-action.\n\nEmail Sequence Plan:\n{{Email Sequence Planning}}"
+        template: "Write the complete content for each email in the sequence using {{subject_line_style}} subject lines. {{include_personalization === 'yes' ? 'Include personalization variables and conditional content blocks.' : ''}} Ensure coherent progression through the sequence.\n\nSequence Strategy:\n{{Sequence Strategy}}"
       }
     },
     {
       id: "5",
-      type: "OUTPUT" as keyof typeof NodeType,
-      position: { x: 600, y: 175 },
-      data: {
-        label: "Email Sequence",
-        description: "Complete email sequence with content"
+      type: NodeType.OUTPUT,
+      position: { x: 600, y: 250 },
+      data: { 
+        label: "Complete Email Sequence", 
+        description: "Ready-to-implement email campaign" 
       }
     }
   ],

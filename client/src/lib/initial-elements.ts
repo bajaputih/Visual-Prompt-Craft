@@ -1,14 +1,4 @@
 import { FlowElements, NodeType } from "@shared/schema";
-import {
-  sqlQueryGenerator,
-  dataVisualization,
-  statisticalAnalysis,
-  uiDesignSystem,
-  uxFlowDesigner,
-  seoArticleGenerator,
-  socialMediaContent,
-  emailSequence
-} from "./template-presets";
 
 // Default elements for a new prompt
 export const initialElements: FlowElements = {
@@ -64,6 +54,7 @@ export const initialElements: FlowElements = {
 
 // Templates for new prompts
 export const promptTemplates = {
+  // Basic Templates
   summarization: {
     name: "Text Summarization",
     description: "Summarizes text content efficiently",
@@ -279,6 +270,8 @@ export const promptTemplates = {
       ]
     }
   },
+  
+  // Customer Support Templates
   qaChain: {
     name: "Q&A Chain",
     description: "Answer questions based on provided context",
@@ -333,6 +326,8 @@ export const promptTemplates = {
       ]
     }
   },
+  
+  // Content Creation Templates
   contentCreation: {
     name: "Content Creation",
     description: "Generate professional blog posts and articles",
@@ -402,6 +397,8 @@ export const promptTemplates = {
       ]
     }
   },
+  
+  // Analysis Templates
   sentimentAnalysis: {
     name: "Sentiment Analysis",
     description: "Analyze sentiment and emotions in text",
@@ -481,95 +478,96 @@ export const promptTemplates = {
       ]
     }
   },
-  architectureDesign: {
-    name: "Software Architecture Designer",
-    description: "Designs software architecture for new projects",
-    category: "Development",
+  
+  // Data Analysis Templates
+  dataAnalysis: {
+    name: "Data Analysis",
+    description: "Analyze and interpret data sets",
+    category: "Data Analysis",
     elements: {
       nodes: [
         {
           id: "1",
-          type: "INPUT" as keyof typeof NodeType,
+          type: NodeType.INPUT,
           position: { x: 100, y: 100 },
           data: { 
-            label: "Project Requirements", 
-            description: "Functional and non-functional requirements" 
+            label: "Data Input", 
+            description: "Dataset to analyze" 
           }
         },
         {
           id: "2",
-          type: "INPUT" as keyof typeof NodeType,
+          type: NodeType.INPUT,
           position: { x: 100, y: 250 },
           data: { 
-            label: "Technology Constraints", 
-            description: "Tech stack limitations or preferences" 
+            label: "Analysis Requirements", 
+            description: "What insights are needed" 
           }
         },
         {
           id: "3",
-          type: "PROCESS" as keyof typeof NodeType,
+          type: NodeType.PROCESS,
           position: { x: 350, y: 100 },
           data: { 
-            label: "System Design", 
-            description: "High-level architecture design",
+            label: "Data Cleaning", 
+            description: "Clean and prepare data",
             parameters: {
-              architecture_type: "microservices",
-              scalability: "high"
+              handle_missing: "impute"
             },
-            template: "Design a {{architecture_type}} architecture for a system with {{scalability}} scalability based on the following requirements and constraints. Include component diagrams, data flow, and technology choices.\n\nRequirements:\n{{Project Requirements}}\n\nTechnology Constraints:\n{{Technology Constraints}}"
+            template: "Clean the following dataset. Handle missing values by {{handle_missing}}. Remove outliers if necessary. Format the data for analysis.\n\nData:\n{{Data Input}}"
           }
         },
         {
           id: "4",
-          type: "PROCESS" as keyof typeof NodeType,
+          type: NodeType.PROCESS,
           position: { x: 350, y: 250 },
           data: { 
-            label: "Component Specification", 
-            description: "Detailed component design",
+            label: "Statistical Analysis", 
+            description: "Run statistical tests",
             parameters: {
-              detail_level: "high"
+              test_type: "correlation"
             },
-            template: "Based on the system design, provide {{detail_level === 'high' ? 'detailed' : 'basic'}} specifications for each component. Include interfaces, dependencies, data models, and implementation guidelines.\n\nSystem Design:\n{{System Design}}"
+            template: "Perform {{test_type}} analysis on the cleaned data. Calculate relevant statistics and explain their significance.\n\nCleaned Data:\n{{Data Cleaning}}\n\nAnalysis Requirements:\n{{Analysis Requirements}}"
           }
         },
         {
           id: "5",
-          type: "PROCESS" as keyof typeof NodeType,
-          position: { x: 600, y: 100 },
+          type: NodeType.PROCESS,
+          position: { x: 600, y: 175 },
           data: { 
-            label: "Implementation Plan", 
-            description: "Development roadmap",
+            label: "Insight Generation", 
+            description: "Extract meaningful insights",
             parameters: {
-              timeline: "3 months"
+              max_insights: "5"
             },
-            template: "Create an implementation plan and roadmap for developing this architecture over a {{timeline}} period. Include phases, key milestones, and resource allocation suggestions.\n\nArchitecture:\n{{System Design}}\n\nComponent Details:\n{{Component Specification}}"
+            template: "Based on the statistical analysis, generate up to {{max_insights}} key insights. Explain each insight and its business implications.\n\nStatistical Analysis:\n{{Statistical Analysis}}"
           }
         },
         {
           id: "6",
-          type: "OUTPUT" as keyof typeof NodeType,
-          position: { x: 600, y: 250 },
+          type: NodeType.OUTPUT,
+          position: { x: 850, y: 175 },
           data: { 
-            label: "Architecture Document", 
-            description: "Complete architecture specification" 
+            label: "Analysis Report", 
+            description: "Complete analysis with insights" 
           }
         }
       ],
       edges: [
         { id: "e1-3", source: "1", target: "3" },
-        { id: "e2-3", source: "2", target: "3" },
         { id: "e3-4", source: "3", target: "4" },
-        { id: "e3-5", source: "3", target: "5" },
+        { id: "e2-4", source: "2", target: "4" },
         { id: "e4-5", source: "4", target: "5" },
         { id: "e5-6", source: "5", target: "6" }
       ]
     }
   },
   
-  ideaGeneration: {
-    name: "Idea Generation",
-    description: "Generate creative ideas for various purposes",
-    category: "Brainstorming",
+  // Design Templates
+  uiDesigner: {
+    name: "UI Component Designer",
+    description: "Design consistent UI components",
+    category: "Design",
     elements: {
       nodes: [
         {
@@ -577,8 +575,8 @@ export const promptTemplates = {
           type: NodeType.INPUT,
           position: { x: 100, y: 100 },
           data: { 
-            label: "Topic Area", 
-            description: "Field or domain for ideas" 
+            label: "Brand Guidelines", 
+            description: "Brand colors, typography, etc." 
           }
         },
         {
@@ -586,112 +584,53 @@ export const promptTemplates = {
           type: NodeType.INPUT,
           position: { x: 100, y: 250 },
           data: { 
-            label: "Constraints", 
-            description: "Limitations or requirements" 
+            label: "Component Requirements", 
+            description: "Components needed for design system" 
           }
         },
         {
           id: "3",
           type: NodeType.PROCESS,
-          position: { x: 350, y: 175 },
+          position: { x: 350, y: 100 },
           data: { 
-            label: "Idea Brainstorming", 
-            description: "Generate diverse ideas",
+            label: "Design System Definition", 
+            description: "Define design tokens",
             parameters: {
-              num_ideas: "10",
-              creativity_level: "high"
+              format: "tailwind"
             },
-            template: "Generate {{num_ideas}} creative ideas related to {{Topic Area}} with {{creativity_level}} creativity level. Consider these constraints: {{Constraints}}. For each idea provide a title and a 2-3 sentence description."
+            template: "Based on the brand guidelines, define a design system using {{format}} format. Include color palette, typography scale, spacing system, and other necessary design tokens.\n\nBrand Guidelines:\n{{Brand Guidelines}}"
           }
         },
         {
           id: "4",
           type: NodeType.PROCESS,
-          position: { x: 600, y: 175 },
+          position: { x: 350, y: 250 },
           data: { 
-            label: "Idea Refinement", 
-            description: "Improve and detail ideas",
+            label: "Component Design", 
+            description: "Create component specifications",
             parameters: {
-              top_ideas: "3"
+              include_variants: "yes",
+              framework: "React"
             },
-            template: "Select the top {{top_ideas}} most promising ideas from the following list and expand them with more details, potential implementation steps, and possible challenges to overcome:\n\nIdeas: {{Idea Brainstorming}}"
+            template: "Design the following UI components based on the design system. For each component, include states, variants, and responsive behavior. Format for {{framework}} implementation.\n\nDesign System:\n{{Design System Definition}}\n\nComponents to Design:\n{{Component Requirements}}"
           }
         },
         {
           id: "5",
           type: NodeType.OUTPUT,
-          position: { x: 850, y: 175 },
+          position: { x: 600, y: 175 },
           data: { 
-            label: "Final Ideas", 
-            description: "Refined creative proposals" 
+            label: "Design Documentation", 
+            description: "Complete component documentation" 
           }
         }
       ],
       edges: [
         { id: "e1-3", source: "1", target: "3" },
-        { id: "e2-3", source: "2", target: "3" },
         { id: "e3-4", source: "3", target: "4" },
+        { id: "e2-4", source: "2", target: "4" },
         { id: "e4-5", source: "4", target: "5" }
       ]
     }
-  },
-  
-  // Data Analysis Templates
-  sqlQueryGen: {
-    name: "SQL Query Generator",
-    description: "Generates optimized SQL queries from business questions",
-    category: "Data Analysis",
-    elements: sqlQueryGenerator
-  },
-  
-  dataViz: {
-    name: "Data Visualization Recommender",
-    description: "Recommends appropriate data visualizations",
-    category: "Data Analysis",
-    elements: dataVisualization
-  },
-  
-  statsAnalysis: {
-    name: "Statistical Analysis Helper",
-    description: "Helps select and implement statistical methods",
-    category: "Data Analysis",
-    elements: statisticalAnalysis
-  },
-  
-  // Design Templates
-  designSystem: {
-    name: "UI Design System Creator",
-    description: "Creates comprehensive design systems",
-    category: "Design",
-    elements: uiDesignSystem
-  },
-  
-  uxFlow: {
-    name: "UX Flow Designer",
-    description: "Designs user experience flows and screens",
-    category: "Design",
-    elements: uxFlowDesigner
-  },
-  
-  // Content Writing Templates
-  seoArticle: {
-    name: "SEO Article Generator",
-    description: "Creates SEO-optimized articles",
-    category: "Content Creation",
-    elements: seoArticleGenerator
-  },
-  
-  socialMedia: {
-    name: "Social Media Content Calendar",
-    description: "Creates multi-platform social media content",
-    category: "Content Creation",
-    elements: socialMediaContent
-  },
-  
-  emailCampaign: {
-    name: "Email Sequence Creator",
-    description: "Creates email marketing sequences",
-    category: "Content Creation", 
-    elements: emailSequence
   }
 };
