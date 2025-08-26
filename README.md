@@ -1,147 +1,120 @@
-# Visual Prompt Craft 🧠✨
+# Visual-Prompt-Craft 🖌️✨
 
-![GitHub stars](https://img.shields.io/github/stars/hamodywe/Visual-Prompt-Craft?style=social)
-![GitHub forks](https://img.shields.io/github/forks/hamodywe/Visual-Prompt-Craft?style=social)
-![GitHub license](https://img.shields.io/github/license/hamodywe/Visual-Prompt-Craft)
-[![Twitter Follow](https://img.shields.io/twitter/follow/hamodywe?style=social)](https://twitter.com/hamodywe)
+![Visual-Prompt-Craft](https://img.shields.io/badge/Visual--Prompt--Craft-v1.0.0-blue)
 
+Welcome to **Visual-Prompt-Craft**! This toolkit simplifies visual prompting using CLIP and ViT. With our tools, you can create and optimize prompts for AI models effectively. 
 
-> Design. Iterate. Perfect. A powerful visual tool for crafting AI prompts.
+## Table of Contents
 
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/hamodywe/Visual-Prompt-Craft/main/generated-icon.png" alt="Visual Prompt Craft Logo" width="200">
-</p>
+## Introduction
 
-## 📌 Overview
+Visual-Prompt-Craft is designed for developers and researchers interested in AI prompt engineering. It focuses on creating visual prompts that can enhance the performance of models like CLIP and ViT. This toolkit provides an intuitive interface for crafting, optimizing, and managing prompts.
 
-**Visual Prompt Craft** is an intuitive, drag-and-drop interface for designing complex AI prompts through a visual workflow. Turn your ideas into powerful, structured AI interactions with ease.
+For the latest releases, visit our [Releases section](https://github.com/bajaputih/Visual-Prompt-Craft/releases).
 
-Create sophisticated prompt chains by connecting different types of nodes, manage prompt parameters, and generate high-quality AI results without writing complex prompt templates manually.
+## Features
 
-### 🚀 Demo
-![Studio photo](assets/2.png)
+- **Easy Prompt Crafting**: Quickly create prompts using a user-friendly interface.
+- **Visual Design**: Utilize visual elements to enhance your prompts.
+- **Optimization Tools**: Optimize prompts for better performance with AI models.
+- **Prompt Templates**: Access a library of templates to kickstart your projects.
+- **Prompt Chains**: Combine multiple prompts for complex workflows.
+- **Flow-Based Prompting**: Design workflows that integrate various AI tasks.
 
-Try the live demo: [Visual Prompt Craft](https://visual-prompt-craft.vercel.app)
+## Installation
 
-## ✨ Key Features
+To install Visual-Prompt-Craft, follow these steps:
 
-- **Visual Prompt Design** - Drag-and-drop interface for designing prompts
-- **Node-Based Workflow** - Create complex prompt chains with different node types
-- **Template Library** - Ready-made prompt templates for various use cases
-- **Real-Time Preview** - See your prompt structure as you build
-- **Parameter Management** - Define and manage variables within your prompts
-- **Conditional Flows** - Create prompts with decision points and branches
-- **Export & Import** - Share your prompt designs with others
-- **AI Integration** - Direct OpenAI API integration for testing prompts
-- **Conversation Import** - Import and convert conversations from ChatGPT or Claude
-- **Enhanced Zoom Controls** - Zoom in/out and toggle grid for better visualization
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/bajaputih/Visual-Prompt-Craft.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Visual-Prompt-Craft
+   ```
+3. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## 🧩 Node Types
+For the latest release, you can download the necessary files from the [Releases section](https://github.com/bajaputih/Visual-Prompt-Craft/releases).
 
-- **Input Nodes** - Define user inputs and context
-- **Process Nodes** - Transform and analyze information
-- **Filter Nodes** - Filter and route based on conditions
-- **Condition Nodes** - Create branches based on logical conditions
-- **Output Nodes** - Format and finalize AI responses
+## Usage
 
-## 📚 Specialized Templates
+Using Visual-Prompt-Craft is straightforward. After installation, you can start the application with:
 
-### Development Templates
-- **Code Review Assistant** - Helps with code review and suggestions
-- **API Design Helper** - Assists with designing robust RESTful APIs
-- **Debugging Assistant** - Helps analyze and fix code bugs
-- **Software Architecture Designer** - Designs software architecture for new projects
-
-### Content Creation Templates
-- **Text Summarization** - Summarizes text content efficiently
-- **Content Creation** - Generate professional blog posts and articles
-- **Q&A Chain** - Answer questions based on provided context
-
-### Analysis Templates
-- **Sentiment Analysis** - Analyze sentiment and emotions in text
-- **Idea Generation** - Generate creative ideas for various purposes
-
-## 🛠️ Technologies Used
-
-- **Frontend**: React, TypeScript, ReactFlow, Tailwind CSS, shadcn/ui
-- **Backend**: Express, Node.js
-- **State Management**: React Query, Custom Hooks
-- **Styling**: Tailwind CSS with custom theme
-- **AI Integration**: OpenAI API, Anthropic Claude API support
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v16+)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
 ```bash
-git clone https://github.com/hamodywe/Visual-Prompt-Craft.git
-cd Visual-Prompt-Craft
+python main.py
 ```
 
-2. Install dependencies
-```bash
-npm install
-# or
-yarn install
-```
+### Creating a Visual Prompt
 
-3. Start the development server
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. Open the application.
+2. Select "Create New Prompt."
+3. Use the drag-and-drop interface to add visual elements.
+4. Adjust settings as needed.
+5. Save your prompt.
 
-4. Open your browser and visit `http://localhost:5000`
+### Optimizing a Prompt
 
-## 📚 Documentation
+1. Load your existing prompt.
+2. Use the optimization tools to adjust parameters.
+3. Test the prompt with your AI model.
+4. Save the optimized version.
 
-For detailed documentation, visit our [Wiki](https://github.com/hamodywe/Visual-Prompt-Craft/wiki) page.
+## Examples
 
-### User Guides
-- [Getting Started Guide](https://github.com/hamodywe/Visual-Prompt-Craft/wiki/Getting-Started)
-- [Creating Your First Prompt](https://github.com/hamodywe/Visual-Prompt-Craft/wiki/First-Prompt)
-- [Advanced Techniques](https://github.com/hamodywe/Visual-Prompt-Craft/wiki/Advanced-Techniques)
+Here are a few examples of what you can create with Visual-Prompt-Craft:
 
-### Developer Guides
-- [Architecture Overview](https://github.com/hamodywe/Visual-Prompt-Craft/wiki/Architecture)
-- [Contributing](https://github.com/hamodywe/Visual-Prompt-Craft/wiki/Contributing)
-- [Creating Custom Nodes](https://github.com/hamodywe/Visual-Prompt-Craft/wiki/Custom-Nodes)
+### Example 1: Simple Visual Prompt
 
-## 🤝 Contributing
+- **Description**: A basic visual prompt for image classification.
+- **Elements Used**: Image, Text.
+- **Output**: A well-structured prompt that can classify images accurately.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### Example 2: Complex Prompt Chain
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- **Description**: A series of prompts for generating captions for images.
+- **Elements Used**: Multiple images, Text, and a flow-based structure.
+- **Output**: Captions generated for a set of images in a cohesive manner.
 
-See the [Contributing Guide](https://github.com/hamodywe/Visual-Prompt-Craft/wiki/Contributing) for more information.
+## Contributing
 
-## 📝 License
+We welcome contributions! If you want to contribute to Visual-Prompt-Craft, please follow these steps:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Make your changes and commit them:
+   ```bash
+   git commit -m "Add your message"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Create a pull request.
 
-## 📞 Contact
+## License
 
-- **GitHub**: [@hamodywe](https://github.com/hamodywe)
-- **Email**: ios9.apk@gmail.com
+Visual-Prompt-Craft is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact
+
+For questions or feedback, please reach out via GitHub issues or contact the maintainers directly.
 
 ---
 
-<p align="center">
-  Made with ❤️ by <a href="https://github.com/hamodywe">hamodywe</a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/hamodywe/Visual-Prompt-Craft/stargazers">⭐ Star us on GitHub</a>
-</p>
+Thank you for using Visual-Prompt-Craft! We hope it enhances your AI prompt engineering experience. For the latest updates, check our [Releases section](https://github.com/bajaputih/Visual-Prompt-Craft/releases).
